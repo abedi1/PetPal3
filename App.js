@@ -1,4 +1,5 @@
 import 'react-native-gesture-handler';
+import '@azure/core-asynciterator-polyfill'
 import React, {useState} from 'react';
 import {SafeAreaView, StyleSheet, Pressable, View} from 'react-native';
 
@@ -9,6 +10,17 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import {Amplify} from 'aws-amplify';
+import { withAuthenticator } from 'aws-amplify-react-native';
+import awsconfig from './src/aws-exports';
+import ProfileScreen from './src/screens/ProfileScreen';
+
+Amplify.configure({
+  awsconfig,
+  Analytics: {
+    disabled: true,
+  },
+});
 
 const App = () => {
   const color = '#b5b5b5';
@@ -43,16 +55,17 @@ const App = () => {
             />
           </Pressable>
 
-          <Pressable onPress={() => setActiveScreen('USER')}>
+          <Pressable onPress={() => setActiveScreen('PROFILE')}>
             <FontAwesome
               name="user"
               size={topIconSize}
-              color={activeScreen === 'USER' ? activeColor : color}
+              color={activeScreen === 'PROFILE' ? activeColor : color}
             />
           </Pressable>
         </View>
         {activeScreen === 'HOME' && <HomeScreen />}
         {activeScreen === 'CHAT' && <MatchesScreen />}
+        {activeScreen === 'PROFILE' && <ProfileScreen />}
       </GestureHandlerRootView>
     </SafeAreaView>
   );
@@ -75,4 +88,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default withAuthenticator(App);

@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-petpal-staging-202101-authRole",
+      "UnauthRoleArn": "arn:aws:iam::810734987857:role/amplify-petpal-staging-202101-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::810734987857:role/amplify-petpal-staging-202101-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-petpal-staging-202101-deployment",
+      "UnauthRoleName": "amplify-petpal-staging-202101-unauthRole",
+      "StackName": "amplify-petpal-staging-202101",
+      "StackId": "arn:aws:cloudformation:us-east-1:810734987857:stack/amplify-petpal-staging-202101/5f28fcd0-5890-11ed-8a17-1263bcf9735d",
+      "AmplifyAppId": "d1ywrw50dmqad4"
+    },
+    "categories": {
+      "auth": {
+        "PetPal": {}
+      },
+      "storage": {
+        "s3petpalstorage835c48e2": {}
+      }
+    }
+  }
+}
