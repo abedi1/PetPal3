@@ -38,6 +38,13 @@ export const schema = {
                         "targetName": "matchUser2Id"
                     }
                 },
+                "isMatch": {
+                    "name": "isMatch",
+                    "isArray": false,
+                    "type": "Boolean",
+                    "isRequired": true,
+                    "attributes": []
+                },
                 "createdAt": {
                     "name": "createdAt",
                     "isArray": false,
@@ -185,5 +192,5 @@ export const schema = {
     "enums": {},
     "nonModels": {},
     "codegenVersion": "3.3.1",
-    "version": "b1b1566df58891cf127aec6d5223e755"
+    "version": "980a8c0fae665af763bb11fb0b8ede01"
 };

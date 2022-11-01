@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, useWindowDimensions} from 'react-native';
+import {View, StyleSheet, useWindowDimensions, Text} from 'react-native';
 
 import Animated, {
   useSharedValue,
@@ -112,7 +112,7 @@ const AnimatedStack = props => {
         </View>
       )}
 
-      {currentProfile && (
+      {currentProfile ? (
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[styles.animatedCard, cardStyle]}>
             <Animated.Image
@@ -128,6 +128,10 @@ const AnimatedStack = props => {
             {renderItem({item: currentProfile})}
           </Animated.View>
         </PanGestureHandler>
+      ) : (
+        <View>
+          <Text>Oops, No More users</Text>
+        </View>
       )}
     </View>
   );

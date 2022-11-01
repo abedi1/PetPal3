@@ -1,8 +1,42 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, SafeAreaView, Image} from 'react-native';
 import users from '../../assets/data/animals';
+import {DataStore, Auth} from 'aws-amplify';
+import {Match, User} from '../models';
 
 const MatchesScreen = () => {
+  const [matches, setMatches] = useState([]);
+  const [me, setMe] = useState(null);
+
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const user = await Auth.currentAuthenticatedUser();
+     
+      const dbUsers = await DataStore.query(User, u => u.sub("eq", user.attributes.sub));
+      if (dbUsers.length < 0) {
+        me = null;
+        return;
+      }
+      setMe(dbUsers[0]);
+    };
+    getCurrentUser();
+  }, []);
+
+  useEffect(() => {
+    if (!me) {
+      return;
+    }
+    const fetchMatches = async () => {
+      const result = await DataStore.query(Match, m =>
+        m
+          .isMatch('eq', true)
+          .or(m => m.matchUser1Id('eq', me.id).matchUser2Id('eq', me.id)),
+      );
+      setMatches(result);
+    };
+    fetchMatches();
+  }, [me]);
+
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
@@ -10,9 +44,9 @@ const MatchesScreen = () => {
           New Matches
         </Text>
         <View style={styles.users}>
-          {users.map(user => (
-            <View style={styles.user} key={user.id}>
-              <Image source={{uri: user.image}} style={styles.image} />
+          {matches.map(match => (
+            <View style={styles.user} key={match.User1.id}>
+              <Image source={{uri: match.User1.image}} style={styles.image} />
             </View>
           ))}
         </View>
