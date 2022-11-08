@@ -19,7 +19,7 @@ const HomeScreen = () => {
       const user = await Auth.currentAuthenticatedUser();
      
       const dbUsers = await DataStore.query(User, u => u.sub("eq", user.attributes.sub));
-      if (dbUsers.length < 0) {
+      if (!dbUsers || dbUsers.length <= 0) {
         me = null;
         return;
       }
