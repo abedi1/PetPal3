@@ -21,9 +21,9 @@ const ProfileScreen = () => {
 
   useEffect(() => {
     const getCurrentUser = async () => {
-      const user = await Auth.currentAuthenticatedUser();
+      const authUser = await Auth.currentAuthenticatedUser();
 
-      const dbUsers = await DataStore.query(User, u => u.sub("eq", user.attributes.sub));
+      const dbUsers = await DataStore.query(User, u => u.sub("eq", authUser.attributes.sub));
       if (!dbUsers || dbUsers.length <= 0) {
         return;
       }
@@ -83,6 +83,10 @@ const ProfileScreen = () => {
     Alert.alert('User saved succesfully');
   };
 
+  const signOut = async () =>{
+    Auth.signOut();
+  };
+
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
@@ -113,7 +117,7 @@ const ProfileScreen = () => {
           <Text>Save</Text>
         </Pressable>
 
-        <Pressable onPress={() => Auth.signOut()} style={styles.button}>
+        <Pressable onPress={signOut} style={styles.button}>
           <Text>Sign out</Text>
         </Pressable>
       </View>

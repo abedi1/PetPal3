@@ -1,7 +1,7 @@
 import 'react-native-gesture-handler';
-import '@azure/core-asynciterator-polyfill'
-import React, {useState} from 'react';
-import {SafeAreaView, StyleSheet, Pressable, View} from 'react-native';
+import '@azure/core-asynciterator-polyfill';
+import React, {useState, useEffect} from 'react';
+import {SafeAreaView, StyleSheet, Pressable, View, ActivityIndicator} from 'react-native';
 
 import HomeScreen from './src/screens/HomeScreen';
 import MatchesScreen from './src/screens/MatchesScreen';
@@ -10,8 +10,8 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {Amplify} from 'aws-amplify';
-import { withAuthenticator } from 'aws-amplify-react-native';
+import {Amplify, Hub} from 'aws-amplify';
+import {withAuthenticator} from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports';
 import ProfileScreen from './src/screens/ProfileScreen';
 
@@ -27,6 +27,37 @@ const App = () => {
   const activeColor = '#F76C6B';
   const topIconSize = 30;
   const [activeScreen, setActiveScreen] = useState('HOME');
+  const [isUserLoading, setIsUserLoading] = useState(true)
+
+  useEffect(() => {
+    const listener = Hub.listen('datastore', async hubData => {
+      const {event, data} = hubData.payload;
+      if (event === 'modelSynced' && data?.model?.name === 'User') {
+        console.log('User Model has finished syncing');
+        setIsUserLoading(false);
+      }
+    });
+
+    return () => listener(); //removes listener when apllication closes
+  }, []);
+
+ const renderPage = () =>{
+  if (activeScreen === 'HOME'){
+    return <HomeScreen isUserLoading={isUserLoading}/>
+  }
+
+  if (isUserLoading){
+    return <ActivityIndicator style ={{flex:1}}/>
+  }
+
+  if (activeScreen === 'CHAT'){
+    return <MatchesScreen/>
+  }
+  if (activeScreen === 'PROFILE'){
+    return <ProfileScreen/>
+  }
+ }
+
   return (
     <SafeAreaView style={styles.root}>
       <GestureHandlerRootView style={styles.pageContainer}>
@@ -63,9 +94,9 @@ const App = () => {
             />
           </Pressable>
         </View>
-        {activeScreen === 'HOME' && <HomeScreen />}
-        {activeScreen === 'CHAT' && <MatchesScreen />}
-        {activeScreen === 'PROFILE' && <ProfileScreen />}
+
+        {renderPage()}
+
       </GestureHandlerRootView>
     </SafeAreaView>
   );

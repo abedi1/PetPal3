@@ -11,8 +11,10 @@ const MatchesScreen = () => {
   useEffect(() => {
     const getCurrentUser = async () => {
       const user = await Auth.currentAuthenticatedUser();
-     
-      const dbUsers = await DataStore.query(User, u => u.sub("eq", user.attributes.sub));
+
+      const dbUsers = await DataStore.query(User, u =>
+        u.sub('eq', user.attributes.sub),
+      );
       if (!dbUsers || dbUsers.length <= 0) {
         me = null;
         return;
@@ -44,11 +46,15 @@ const MatchesScreen = () => {
           New Matches
         </Text>
         <View style={styles.users}>
-          {matches.map(match => (
-            <View style={styles.user} key={match.User1.id}>
-              <Image source={{uri: match.User1.image}} style={styles.image} />
-            </View>
-          ))}
+          {matches.map(match => {
+            const matchUser = match.matchUser1Id === me.id ? match.User2 : match.User1
+            return (
+              <View style={styles.user} key={matchUser.id}>
+                <Image source={{uri: matchUser.image}} style={styles.image} />
+                <Text style={styles.name}>{matchUser.name}</Text>
+              </View>
+            );
+          })}
         </View>
       </View>
     </SafeAreaView>
@@ -83,6 +89,11 @@ const styles = StyleSheet.create({
     height: '100%',
     borderRadius: 50,
   },
+  name: {
+    textAlign: 'center',
+    marginTop: 10,
+    fontWeight: 'bold'
+  }
 });
 
 export default MatchesScreen;
