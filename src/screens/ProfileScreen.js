@@ -8,9 +8,12 @@ import {
   Pressable,
   TextInput,
   Alert,
+  Image,
+  ScrollView,
 } from 'react-native';
 import {Auth, DataStore} from 'aws-amplify';
 import {Picker} from '@react-native-picker/picker';
+import { launchImageLibrary } from 'react-native-image-picker';
 import {User} from '../models/';
 
 const ProfileScreen = () => {
@@ -23,7 +26,9 @@ const ProfileScreen = () => {
     const getCurrentUser = async () => {
       const authUser = await Auth.currentAuthenticatedUser();
 
-      const dbUsers = await DataStore.query(User, u => u.sub("eq", authUser.attributes.sub));
+      const dbUsers = await DataStore.query(User, u =>
+        u.sub('eq', authUser.attributes.sub),
+      );
       if (!dbUsers || dbUsers.length <= 0) {
         return;
       }
@@ -83,13 +88,36 @@ const ProfileScreen = () => {
     Alert.alert('User saved succesfully');
   };
 
-  const signOut = async () =>{
+  const pickImage = () => {
+    launchImageLibrary(
+      {mediaType: 'photo'},
+      ({didCancel, errorCode, errorMessage, assets}) => {
+        if (didCancel || !errorCode){
+          console.warn('canceled or error')
+          if (!errorCode){
+            console.log(errorMessage)
+          }
+          return;
+        }
+        console.log(assets[0].uri)
+      },
+    );
+  };
+
+  const signOut = async () => {
     Auth.signOut();
   };
 
   return (
     <SafeAreaView style={styles.root}>
-      <View style={styles.container}>
+      <ScrollView style={styles.container}>
+        <Image
+          source={{uri: user?.image}}
+          style={{width: 100, height: 100, borderRadius: 50}}
+        />
+        <Pressable onPress={pickImage}>
+          <Text> Change Image</Text>
+        </Pressable>
         <TextInput
           style={styles.input}
           placeholder="Name ..."
@@ -120,7 +148,7 @@ const ProfileScreen = () => {
         <Pressable onPress={signOut} style={styles.button}>
           <Text>Sign out</Text>
         </Pressable>
-      </View>
+      </ScrollView>
     </SafeAreaView>
   );
 };
