@@ -11,7 +11,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {Amplify, Hub} from 'aws-amplify';
-import {withAuthenticator} from 'aws-amplify-react-native';
+import {withAuthenticator, AmplifyTheme} from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports';
 import ProfileScreen from './src/screens/ProfileScreen';
 
@@ -24,7 +24,7 @@ Amplify.configure({
 
 const App = () => {
   const color = '#b5b5b5';
-  const activeColor = '#F76C6B';
+  const activeColor = '#f07c3c';
   const topIconSize = 30;
   const [activeScreen, setActiveScreen] = useState('HOME');
   const [isUserLoading, setIsUserLoading] = useState(true)
@@ -119,4 +119,69 @@ const styles = StyleSheet.create({
   },
 });
 
-export default withAuthenticator(App);
+const signUpConfig = {
+  header: "SIGN UP",
+  hideAllDefaults: true,
+  signUpFields: [
+    {
+      label: "Username",
+      key: "preferred_username",
+      required: true,
+      displayOrder: 1,
+      type: "string",
+    },
+    {
+      label: "Password",
+      key: "password",
+      required: true,
+      displayOrder: 2,
+      type: "password",
+    },
+    {
+      label: "Email",
+      key: "email",
+      required: true,
+      displayOrder: 3,
+      type: "string",
+    },
+    
+  ],
+};
+
+const signInConfig = {
+  header: "SIGN IN",
+  hideAllDefaults: true,
+  signInFields: [
+    {
+      label: "Username",
+      key: "preferred_username",
+      required: true,
+      displayOrder: 1,
+      type: "string",
+    },
+    {
+      label: "Password",
+      key: "password",
+      required: true,
+      displayOrder: 2,
+      type: "password",
+    },
+    
+  ],
+};
+
+const customTheme = {
+  ...AmplifyTheme,
+  sectionHeader: {
+		width: '100%',
+    justifyContent: 'center',
+    alignItems: 'center',
+		marginBottom: 32,
+		paddingTop: 20,
+	},
+  button: {
+    ...AmplifyTheme.button,
+  }
+};
+
+export default withAuthenticator(App, {signInConfig, signUpConfig, theme: customTheme});
