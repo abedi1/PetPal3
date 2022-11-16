@@ -13,7 +13,7 @@ import {
 } from 'react-native';
 import {Auth, DataStore} from 'aws-amplify';
 import {Picker} from '@react-native-picker/picker';
-import { launchImageLibrary } from 'react-native-image-picker';
+import {launchImageLibrary} from 'react-native-image-picker';
 import {User} from '../models/';
 
 const ProfileScreen = () => {
@@ -90,9 +90,9 @@ const ProfileScreen = () => {
 
   const pickImage = () => {
     launchImageLibrary(
-      {mediaType: 'photo'},
+      {mediaType: 'mixed'},
       ({didCancel, errorCode, errorMessage, assets}) => {
-        if (didCancel || !errorCode){
+        if (didCancel || errorCode){
           console.warn('canceled or error')
           if (!errorCode){
             console.log(errorMessage)
@@ -132,7 +132,7 @@ const ProfileScreen = () => {
           value={bio}
           onChangeText={setBio}
         />
-        <Text>Do you Have a Pet?</Text>
+        <Text>Do you want to be a pet pal?</Text>
         <Picker
           selectedValue={hasPet}
           onValueChange={itemValue => setHasPet(itemValue)}>

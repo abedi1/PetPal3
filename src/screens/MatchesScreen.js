@@ -16,7 +16,7 @@ const MatchesScreen = () => {
         u.sub('eq', user.attributes.sub),
       );
       if (!dbUsers || dbUsers.length <= 0) {
-        me = null;
+        setMe(null);
         return;
       }
       setMe(dbUsers[0]);
