@@ -12,7 +12,7 @@ import {User, Match} from '../models';
 const HomeScreen = ({isUserLoading}) => {
   const [users, setUsers] = useState([]);
   const [me, setMe] = useState(null);
-  const [matchesIds, setMatchesIds] = useState([]); // all ideas of people who we have already matched
+  const [matchesIds, setMatchesIds] = useState([]); // all ids of people who we have already matched
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -61,8 +61,15 @@ const HomeScreen = ({isUserLoading}) => {
         user.hasPet('ne', me.hasPet), // since by definition can't be someone of same type we know that i can't see myself
       );
       fetchedUser = fetchedUsers.filter(u => !matchesIds.includes(u.id))
+      userArray = JSON.parse(JSON.stringify(fetchedUsers));
 
-      setUsers(JSON.parse(JSON.stringify(fetchedUsers)));
+      //Dustenfield Shuffle
+      for (let i = userArray.length - 1; i > 0; i--) {
+        let j = Math.floor(Math.random() * (i + 1));
+        [userArray[i], userArray[j]] = [userArray[j], userArray[i]];
+      }
+      setUsers(userArray); 
+
     };
     fetchUsers(); // getting data from Amplify no longer hardcoded
   }, [isUserLoading, me]);

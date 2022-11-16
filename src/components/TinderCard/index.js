@@ -1,13 +1,26 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Text, ImageBackground, View, StyleSheet} from 'react-native';
+import {Storage} from 'aws-amplify';
+import { set } from 'react-native-reanimated';
 
 const Card = props => {
   const {name, image, bio} = props.user;
+  const [imageUrl, setImageUrl] = useState(image);
+
+  useEffect(()=> {
+    if (!image?.startsWith('http')){
+      Storage.get(image).then(setImageUrl) // downloads the s3Image
+    } else{
+      setImageUrl(image);
+    }
+  }, [image])
+
+
   return (
     <View style={styles.card}>
       <ImageBackground
         source={{
-          uri: image,
+          uri: imageUrl,
         }}
         style={styles.image}>
         <View style={styles.cardInner}>
