@@ -11,6 +11,8 @@ import users from '../../assets/data/animals';
 import {DataStore, Auth} from 'aws-amplify';
 import {Match, User} from '../models';
 import ChatListItem from '../components/ChatListItem';
+import ChatScreen from './ChatScreen';
+
 //dummy data import 
 import bg from '../../assets/images/BG.png';
 import Message from '../components/Message';
@@ -67,9 +69,9 @@ const MatchesScreen = () => {
   }, [me]);
 
   return (
-    <SafeAreaView style={styles.root}>
+    /*<SafeAreaView style={styles.root}>
       <View style={styles.container}>
-        <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
+         <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
           New Matches
         </Text>
         <View style={styles.users}>
@@ -87,10 +89,13 @@ const MatchesScreen = () => {
         <FlatList
           data={chats}
           renderItem={({item}) => <ChatListItem chat={item} />}
-         // style={{padding: 10}}
-        />
+        /> 
+       
       </View>
-    </SafeAreaView>
+    </SafeAreaView>*/
+    <View>
+      <ChatScreen />
+    </View>
   );
 };
 
