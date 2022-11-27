@@ -1,19 +1,62 @@
 import {View, Text, TextInput, StyleSheet} from 'react-native';
-import {AntDesign} from '@expo/vector-icons';
-import {MaterialIcons} from '@expo/vector-icons';
+import {Icon} from 'react-native-elements';
+import {useState} from 'react';
 
 const InputBox = () => {
+  const [newMessage, setNewMessage] = useState('');
+
+  const onSend = () => {
+   console.warn('Send a new message: ', newMessage);
+
+   setNewMessage('');
+ };
+ 
   return (
-    <View>
-      <Text>InputBox</Text>
+    <View style={styles.container}>
+      <Icon name="plus" type="font-awesome" size={24} color="royalblue" />
+      <TextInput
+      value={newMessage}
+      onChangeText={setNewMessage}
+      multiline
+      style={styles.input}
+      />
+      <Icon
+        name="send"
+        type="font-awesome"
+        size={24}
+        color="royalblue"
+        onPress={onSend}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {},
-  input: {},
-  send: {},
+  container: {
+    flexDirection: 'row',
+    backgroundColor: 'whitesmoke',
+    padding: 5,
+    alignItems: 'center',
+  },
+  input: {
+    fontSize: 18,
+
+    flex: 1,
+    backgroundColor: 'white',
+    padding: 5,
+    paddingHorizontal: 10,
+    marginHorizontal: 10,
+
+    borderRadius: 50,
+    borderWidth: StyleSheet.hairlineWidth,
+    borderColor: 'lightgray',
+  },
+  send: {
+    backgroundColor: 'royalblue',
+    padding: 7,
+    borderRadius: 15,
+    overflow: 'hidden',
+  },
 });
 
 export default InputBox;
