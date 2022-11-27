@@ -75,7 +75,7 @@ const App = () => {
   }
 
   if (activeScreen === 'CHAT'){
-    return <MatchesScreen />;
+    return <Navigator />;
   }
   if (activeScreen === 'PROFILE'){
     return <ProfileScreen/>

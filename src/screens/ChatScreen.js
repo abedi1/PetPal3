@@ -1,5 +1,5 @@
 // src/screens/ChatScreen.js
-
+import {useEffect} from 'react';
 import {
   ImageBackground,
   StyleSheet,
@@ -8,13 +8,16 @@ import {
   KeyboardAvoidingView,
   View,
 } from 'react-native';
+import {useNavigation, useRoute} from '@react-navigation/native';
 import bg from '../../assets/images/BG.png';
 import Message from '../components/Message';
 import messages from '../../assets/data/messages.json';
 import InputBox from '../components/InputBox';
+import React from 'react';
 
 
 const ChatScreen = () => {
+
   return (
       <KeyboardAvoidingView
        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
