@@ -69,9 +69,9 @@ const MatchesScreen = () => {
   }, [me]);
 
   return (
-    /*<SafeAreaView style={styles.root}>
+    <SafeAreaView style={styles.root}>
       <View style={styles.container}>
-         <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
+        <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
           New Matches
         </Text>
         <View style={styles.users}>
@@ -89,13 +89,9 @@ const MatchesScreen = () => {
         <FlatList
           data={chats}
           renderItem={({item}) => <ChatListItem chat={item} />}
-        /> 
-       
+        />
       </View>
-    </SafeAreaView>*/
-    <View>
-      <ChatScreen />
-    </View>
+    </SafeAreaView>
   );
 };
 

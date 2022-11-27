@@ -1,31 +1,33 @@
-import {View, Text, Image, StyleSheet} from 'react-native';
+import {View, Text, Image, StyleSheet, Pressable} from 'react-native';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {useNavigation} from '@react-navigation/native';
 dayjs.extend(relativeTime);
+
 
 const ChatListItem = ({chat}) => {
   return (
-    <View style={styles.container}>
-      {/* User Avatar */}
-      <Image source={{uri: chat.user.image}} style={styles.image} />
+      <View style={styles.container}>
+        {/* User Avatar */}
+        <Image source={{uri: chat.user.image}} style={styles.image} />
 
-      {/* content */}
-      <View style={styles.content}>
-        <View style={styles.row}>
-          <Text style={styles.name} numberOfLines={1}>
-            {chat.user.name}
-          </Text>
+        {/* content */}
+        <View style={styles.content}>
+          <View style={styles.row}>
+            <Text style={styles.name} numberOfLines={1}>
+              {chat.user.name}
+            </Text>
 
-          <Text style={styles.subTitle}>
-            {dayjs(chat.lastMessage.createdAt).fromNow()}
+            <Text style={styles.subTitle}>
+              {dayjs(chat.lastMessage.createdAt).fromNow()}
+            </Text>
+          </View>
+
+          <Text style={styles.subTitle} numberOfLines={2}>
+            {chat.lastMessage.text}
           </Text>
         </View>
-
-        <Text style={styles.subTitle} numberOfLines={2}>
-          {chat.lastMessage.text}
-        </Text>
       </View>
-    </View>
   );
 };
 

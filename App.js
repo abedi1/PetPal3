@@ -2,7 +2,7 @@ import 'react-native-gesture-handler';
 import '@azure/core-asynciterator-polyfill';
 import React, {useState, useEffect} from 'react';
 import {SafeAreaView, StyleSheet, Pressable, View, ActivityIndicator} from 'react-native';
-
+import Navigator from './src/navigation/index';
 import HomeScreen from './src/screens/HomeScreen';
 import MatchesScreen from './src/screens/MatchesScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
@@ -23,6 +23,7 @@ Amplify.configure({
   Analytics: {
     disabled: true,
   },
+
 });
 
 const App = () => {
@@ -74,7 +75,7 @@ const App = () => {
   }
 
   if (activeScreen === 'CHAT'){
-    return <MatchesScreen/>
+    return <MatchesScreen />;
   }
   if (activeScreen === 'PROFILE'){
     return <ProfileScreen/>
