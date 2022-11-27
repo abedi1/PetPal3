@@ -1,11 +1,35 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, StyleSheet, SafeAreaView, Image} from 'react-native';
+import {
+  View,
+  Text,
+  StyleSheet,
+  SafeAreaView,
+  Image,
+  FlatList
+} from 'react-native';
 import users from '../../assets/data/animals';
 import {DataStore, Auth} from 'aws-amplify';
 import {Match, User} from '../models';
-
 import ChatListItem from '../components/ChatListItem';
+//dummy data import 
+import bg from '../../assets/images/BG.png';
+import Message from '../components/Message';
+import messages from '../../assets/data/messages.json';
+import chats from '../../assets/data/chats.json';
 
+
+const chat = {
+  id: '1',
+  user: {
+    image:
+      'https://notjustdev-dummy.s3.us-east-2.amazonaws.com/avatars/lukas.jpeg',
+    name: 'Lukas',
+  },
+  lastMessage: {
+    text: 'Oke',
+    createdAt: '07:30',
+  },
+};
 
 const MatchesScreen = () => {
   const [matches, setMatches] = useState([]);
@@ -60,7 +84,11 @@ const MatchesScreen = () => {
             );
           })}
         </View>
-        <ChatListItem />
+        <FlatList
+          data={chats}
+          renderItem={({item}) => <ChatListItem chat={item} />}
+         // style={{padding: 10}}
+        />
       </View>
     </SafeAreaView>
   );
