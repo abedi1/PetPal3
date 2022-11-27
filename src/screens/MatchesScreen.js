@@ -4,6 +4,9 @@ import users from '../../assets/data/animals';
 import {DataStore, Auth} from 'aws-amplify';
 import {Match, User} from '../models';
 
+import ChatListItem from '../components/ChatListItem';
+
+
 const MatchesScreen = () => {
   const [matches, setMatches] = useState([]);
   const [me, setMe] = useState(null);
@@ -47,7 +50,8 @@ const MatchesScreen = () => {
         </Text>
         <View style={styles.users}>
           {matches.map(match => {
-            const matchUser = match.matchUser1Id === me.id ? match.User2 : match.User1
+            const matchUser =
+              match.matchUser1Id === me.id ? match.User2 : match.User1;
             return (
               <View style={styles.user} key={matchUser.id}>
                 <Image source={{uri: matchUser.image}} style={styles.image} />
@@ -56,6 +60,7 @@ const MatchesScreen = () => {
             );
           })}
         </View>
+        <ChatListItem />
       </View>
     </SafeAreaView>
   );
