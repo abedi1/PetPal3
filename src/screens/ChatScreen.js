@@ -16,7 +16,14 @@ import InputBox from '../components/InputBox';
 import React from 'react';
 
 
+
 const ChatScreen = () => {
+  const navigation = useNavigation();
+  const route = useRoute();
+  
+  useEffect(() => {
+    navigation.setOptions({title: route.params.name});
+  }, [route.params]);
 
   return (
       <KeyboardAvoidingView
