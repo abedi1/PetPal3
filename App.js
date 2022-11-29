@@ -1,7 +1,15 @@
 import 'react-native-gesture-handler';
 import '@azure/core-asynciterator-polyfill';
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, Pressable, View, ActivityIndicator} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  View,
+  ActivityIndicator,
+  Text,
+  Dimensions,
+} from 'react-native';
 import Navigator from './src/navigation/index';
 import HomeScreen from './src/screens/HomeScreen';
 import MatchesScreen from './src/screens/MatchesScreen';
@@ -15,8 +23,11 @@ import {withAuthenticator} from 'aws-amplify-react-native';
 import awsconfig from './src/aws-exports';
 import ProfileScreen from './src/screens/ProfileScreen';
 import {User} from './src/models/';
+import {NavigationContainer} from '@react-navigation/native';
+import {createStackNavigator} from '@react-navigation/stack';
+import ChatScreen from './src/screens/ChatScreen';
 
-
+const Stack = createStackNavigator();
 
 Amplify.configure({
   awsconfig,
@@ -75,7 +86,15 @@ const App = () => {
   }
 
   if (activeScreen === 'CHAT'){
-    return <Navigator />;
+    // return <Navigator />;
+      return (
+          <NavigationContainer>
+            <Stack.Navigator initialRouteName="Chats">
+              <Stack.Screen name="Chats" component={MatchesScreen} />
+              <Stack.Screen name="Chat" component={ChatScreen} />
+            </Stack.Navigator>
+          </NavigationContainer>
+      );
   }
   if (activeScreen === 'PROFILE'){
     return <ProfileScreen/>
@@ -120,7 +139,6 @@ const App = () => {
         </View>
 
         {renderPage()}
-
       </GestureHandlerRootView>
     </SafeAreaView>
   );
@@ -131,8 +149,8 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   pageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
+  //  justifyContent: 'center',
+  //  alignItems: 'center',
     flex: 1,
   },
   topNavigation: {
