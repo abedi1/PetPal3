@@ -86,15 +86,15 @@ const App = () => {
   }
 
   if (activeScreen === 'CHAT'){
-    // return <Navigator />;
-      return (
-          <NavigationContainer>
-            <Stack.Navigator initialRouteName="Chats">
-              <Stack.Screen name="Chats" component={MatchesScreen} />
-              <Stack.Screen name="Chat" component={ChatScreen} />
-            </Stack.Navigator>
-          </NavigationContainer>
-      );
+     return <Navigator />;
+      // return (
+      //     <NavigationContainer>
+      //       <Stack.Navigator initialRouteName="Chats">
+      //         <Stack.Screen name="Chats" component={MatchesScreen} />
+      //         <Stack.Screen name="Chat" component={ChatScreen} />
+      //       </Stack.Navigator>
+      //     </NavigationContainer>
+      // );
   }
   if (activeScreen === 'PROFILE'){
     return <ProfileScreen/>

@@ -47,18 +47,19 @@
         "UserPoolId": "us-east-1_VuuxD1Bof",
         "AppClientIDWeb": "5jobpu98vmnv8a56gpgeumqopd",
         "AppClientID": "6p0q09rtl081v4fpa27pa5u4p9",
-        "HostedUIDomain": "fryvn1u6fo0h-staging",
         "IdentityPoolId": "us-east-1:c7d1ecd3-ff89-403a-8b4f-3242bbc9738c",
         "UserPoolArn": "arn:aws:cognito-idp:us-east-1:810734987857:userpool/us-east-1_VuuxD1Bof",
         "IdentityPoolName": "testAuthIdentityPool__staging",
-        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://fryvn1u6fo0h-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://fryvn1u6fo0h-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\"]}",
-        "UserPoolName": "PetPal"
+        "UserPoolName": "PetPal",
+        "HostedUIDomain": "fryvn1u6fo0h-staging",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"https://fryvn1u6fo0h-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\"],\"LogoutURLs\":[\"https://fryvn1u6fo0h-staging.auth.us-east-1.amazoncognito.com/oauth2/idpresponse\"]}"
       },
-      "lastPushTimeStamp": "2022-11-27T06:53:53.905Z",
+      "lastPushTimeStamp": "2022-11-27T11:01:19.185Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/auth/PetPal-cloudformation-template.json",
         "logicalId": "authPetPal"
-      }
+      },
+      "lastPushDirHash": "KDPRljoy945Ugjbth5edvrJVzy4="
     }
   },
   "api": {
@@ -85,7 +86,7 @@
         "GraphQLAPIEndpointOutput": "https://naq6rvonafcxzc5gnuitjpaxyq.appsync-api.us-east-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-3xlfownauzbj3fykswoiqbjfm4"
       },
-      "lastPushTimeStamp": "2022-11-27T06:53:53.910Z",
+      "lastPushTimeStamp": "2022-11-27T11:01:19.191Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiPetPal"
@@ -101,7 +102,7 @@
         "BucketName": "petpal-storage-835c48e2202101-staging",
         "Region": "us-east-1"
       },
-      "lastPushTimeStamp": "2022-11-27T06:53:55.048Z",
+      "lastPushTimeStamp": "2022-11-27T11:01:21.110Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3petpalstorage835c48e2"

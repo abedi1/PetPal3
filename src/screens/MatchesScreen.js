@@ -1,11 +1,17 @@
 import React, {useState, useEffect} from 'react';
+import {API, graphqlOperation} from 'aws-amplify';
+import {createChatRoom, createChatRoomUser} from '../graphql/mutations';
+import {getUser} from '../graphql/queries';
+
 import {
   View,
   Text,
   StyleSheet,
   SafeAreaView,
   Image,
-  FlatList
+  FlatList, 
+  Pressable,
+  AppRegistry
 } from 'react-native';
 import users from '../../assets/data/animals';
 import {DataStore, Auth} from 'aws-amplify';
@@ -18,6 +24,9 @@ import bg from '../../assets/images/BG.png';
 import Message from '../components/Message';
 import messages from '../../assets/data/messages.json';
 import chats from '../../assets/data/chats.json';
+import { create } from 'react-test-renderer';
+import Navigator from '../navigation/index';
+import {useNavigation, useRoute} from '@react-navigation/native';
 
 
 const chat = {
@@ -34,8 +43,43 @@ const chat = {
 };
 
 const MatchesScreen = () => {
+  const [chatRooms, setChatRooms] = useState([]);
   const [matches, setMatches] = useState([]);
   const [me, setMe] = useState(null);
+  const navigator = useNavigation();
+
+  pressed = matchUser => async () => {
+    //check if the chatroom exists
+    //create chatroom
+    const newChatRoomData = await API.graphql(
+      graphqlOperation(createChatRoom, {input: {}}),
+    );
+
+    if (!newChatRoomData.data?.createChatRoom) {
+      console.log('Error creating chatroom');
+    }
+    const newChatRoom = newChatRoomData.data?.createChatRoom;
+
+    await API.graphql(
+      graphqlOperation(createChatRoomUser, {
+        input: {chatRoomID: newChatRoom.id, userID: me.id},
+      }),
+    );
+
+    await API.graphql(
+      graphqlOperation(createChatRoomUser, {
+        input: {chatRoomID: newChatRoom.id, userID: matchUser.id},
+      }),
+    );
+
+   console.log(newChatRoom.Users.items);
+
+    //add clicked user to the chatroom
+    //add auth user to the chatroom
+    navigator.navigate('Chat', {id: newChatRoom.id});
+    //navigate to chatroom
+  };
+
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -52,6 +96,18 @@ const MatchesScreen = () => {
     };
     getCurrentUser();
   }, []);
+
+  useEffect(() => {
+    const fetchChatRooms = async () => {
+      const response = await API.graphql(
+        graphqlOperation(getUser, {id: me.id}),
+      ); 
+      console.log("hello");
+      setChatRooms(response.data.getUser.chatrooms.items);
+    };
+
+    fetchChatRooms();
+  }, [me]);
 
   useEffect(() => {
     if (!me) {
@@ -79,15 +135,19 @@ const MatchesScreen = () => {
             const matchUser =
               match.matchUser1Id === me.id ? match.User2 : match.User1;
             return (
-              <View style={styles.user} key={matchUser.id}>
-                <Image source={{uri: matchUser.image}} style={styles.image} />
-                <Text style={styles.name}>{matchUser.name}</Text>
-              </View>
+              <Pressable
+                onPress={this.pressed(matchUser)}
+                sytle={styles.container}>
+                <View style={styles.user} key={matchUser.id}>
+                  <Image source={{uri: matchUser.image}} style={styles.image} />
+                  <Text style={styles.name}>{matchUser.name}</Text>
+                </View>
+              </Pressable>
             );
           })}
         </View>
         <FlatList
-          data={chats}
+          data={chatRooms}
           renderItem={({item}) => <ChatListItem chat={item} />}
         />
       </View>
