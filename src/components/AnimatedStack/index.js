@@ -1,5 +1,11 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, useWindowDimensions, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  Text,
+  Pressable,
+} from 'react-native';
 
 import Animated, {
   useSharedValue,
@@ -13,9 +19,12 @@ import Animated, {
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import Like from '../../../assets/images/LIKE.png';
 import Nope from '../../../assets/images/nope.png';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
+const bottomIconSize = 30;
 
 const AnimatedStack = props => {
   const {data, renderItem, onSwipeRight, onSwipeLeft} = props;
@@ -97,6 +106,18 @@ const AnimatedStack = props => {
     },
   });
 
+  const wrapperSwipeLeft = () => {
+    console.log('got press');
+    setCurrentIndex(currentIndex + 1);
+    onSwipeLeft(currentProfile);
+  };
+
+  const wrapperSwipeRight = () => {
+    console.log('got press');
+    setCurrentIndex(currentIndex + 1);
+    onSwipeRight(currentProfile);
+  };
+
   useEffect(() => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
@@ -111,7 +132,6 @@ const AnimatedStack = props => {
           </Animated.View>
         </View>
       )}
-
       {currentProfile ? (
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[styles.animatedCard, cardStyle]}>
@@ -133,6 +153,30 @@ const AnimatedStack = props => {
           <Text>Oops, No More users</Text>
         </View>
       )}
+      {currentProfile ? (
+        <View style={styles.icons}>
+          <View style={styles.button}>
+            <Pressable onPress={wrapperSwipeLeft}>
+              <Entypo name="cross" size={bottomIconSize} color="#F76C6B" />
+            </Pressable>
+          </View>
+          <View style={styles.button}>
+            <FontAwesome
+              name="question"
+              size={bottomIconSize}
+              color="#3AB4CC"
+            />
+          </View>
+          <View style={styles.button}>
+            <Pressable onPress={wrapperSwipeRight}>
+              <FontAwesome name="heart" size={bottomIconSize} color="#4FCC94" />
+            </Pressable>
+          </View>
+        </View>
+      ) : (
+        <View></View>
+      )}
+      
     </View>
   );
 };
@@ -163,6 +207,21 @@ const styles = StyleSheet.create({
     top: 10,
     zIndex: 1,
     elevation: 1,
+  },
+  icons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    padding: 10,
+  },
+  button: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 50,
   },
 });
 

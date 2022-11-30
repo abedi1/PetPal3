@@ -60,6 +60,8 @@ const HomeScreen = ({isUserLoading}) => {
       const fetchedUsers = await DataStore.query(User, user =>
         user.hasPet('ne', me.hasPet), // since by definition can't be someone of same type we know that i can't see myself
       );
+
+      //ad something here about if match is false but user1 id is you, which means you swiped first i believe
       fetchedUser = fetchedUsers.filter(u => !matchesIds.includes(u.id))
       userArray = JSON.parse(JSON.stringify(fetchedUsers));
 
@@ -78,7 +80,7 @@ const HomeScreen = ({isUserLoading}) => {
     if (!me) {
       return; // do nothing if not signed in
     }
-    console.warn('swipe left', user.name);
+    console.log('swipe left', user.name);
   };
 
   const onSwipeRight = async user => {
@@ -91,7 +93,7 @@ const HomeScreen = ({isUserLoading}) => {
     );
     if (myMatches.length > 0) {
       // we already swiped on them (eventually make it so that person doesn't show up)
-      console.warn('You already swiped right to this user');
+      console.log('You already swiped right to this user');
       return;
     }
 
@@ -100,7 +102,7 @@ const HomeScreen = ({isUserLoading}) => {
     );
     if (theirMatches.length > 0) {
       // Did they already swipe right on us
-      console.log('This is a new match');
+      console.warn('This is a new match');
       const theirMatch = theirMatches[0]; // the first match
       DataStore.save(
         Match.copyOf(theirMatch, updated => (updated.isMatch = true)),
@@ -126,23 +128,17 @@ const HomeScreen = ({isUserLoading}) => {
         onSwipeLeft={onSwipeLeft}
         onSwipeRight={onSwipeRight}
       />
-      <View style={styles.icons}>
-        <View style={styles.button}>
-          <FontAwesome name="undo" size={bottomIconSize} color="#FBD88B" />
-        </View>
+      {/* <View style={styles.icons}>
         <View style={styles.button}>
           <Entypo name="cross" size={bottomIconSize} color="#F76C6B" />
         </View>
         <View style={styles.button}>
-          <FontAwesome name="star" size={bottomIconSize} color="#3AB4CC" />
+          <FontAwesome name="question" size={bottomIconSize} color="#3AB4CC" />
         </View>
         <View style={styles.button}>
           <FontAwesome name="heart" size={bottomIconSize} color="#4FCC94" />
         </View>
-        <View style={styles.button}>
-          <Ionicons name="flash" size={bottomIconSize} color="#A65CD2" />
-        </View>
-      </View>
+      </View> */}
     </View>
   );
 };

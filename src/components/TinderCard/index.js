@@ -64,11 +64,13 @@ const styles = StyleSheet.create({
     fontSize: 30,
     color: 'white',
     fontWeight: 'bold',
+    backgroundColor:'black',
   },
   bio: {
     fontSize: 18,
     color: 'white',
     lineHeight: 25,
+    backgroundColor:'black',
   },
 });
 
