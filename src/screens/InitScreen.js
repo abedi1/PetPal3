@@ -1,31 +1,47 @@
 import React, {useState, useEffect} from 'react';
 import {Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet} from 'react-native';
+import SignInHeader from './SignInHeader';
+import SignTest from './SignTest';
+
 
 const InitScreen = () => {
+    
+    const [activeScreen, setActiveScreen] = useState('INIT');
 
-    return  (
-        <View style={styles.container}>
-            <Text style={styles.main}>
-                PetPal</Text>
-            <Image
-                source={{
-                    uri: 'https://cdn.pixabay.com/photo/2016/04/07/18/57/silhouette-1314467__340.png',  
-                }}
-                style={styles.img}
-            />
-            <Text style={styles.smallText}>By creating an account or logging in, you agree to our extensive Terms of Service and Privacy Policy</Text>
-            <TouchableOpacity style={styles.buttonz1} onPress={() => Alert.alert('Left button pressed')}>
-                <Text style={styles.buttonText}>SIGN UP</Text>
-             </TouchableOpacity>
-             <TouchableOpacity style={styles.buttonz2} onPress={() => Alert.alert('Left button pressed')}>
-                <Text style={styles.buttonText}>SIGN IN</Text>
-             </TouchableOpacity>
-             <TouchableOpacity style={styles.forgot} onPress={() => Alert.alert('Left button pressed')}>
-                <Text style={{fontSize: 15, color: 'white',}}>Forgot your password?</Text>
-             </TouchableOpacity>
+    const renderPage = () =>{
+        if (activeScreen === 'INIT') {
+            return  (
+                <View style={styles.container}>
+                    <Image style={styles.image} source={require('../components/initlogo.png')} ></Image>
+                    
+                    <TouchableOpacity style={styles.buttonz1} onPress={() => setActiveScreen('SIGNIN')}>
+                        <Text style={styles.buttonText}>GET STARTED</Text>
+                     </TouchableOpacity>
+
+                     <Text style={styles.smallText}>By creating an account or logging in, you agree to our extensive Terms of Service and Privacy Policy</Text>
+                     
+                </View>
+        
+            )
+          }
+      
+        if (activeScreen === 'SIGNIN') {
+            return (
+                <View  style={styles.container}>
+                    <SignInHeader/>
+                    <SignTest />
+                </View>   
+            )
+        }
+    }
+
+    return (
+        <View style={styles.container2}>
+        {renderPage()}
         </View>
-
     )
+    
+    
 }
 
 const styles = StyleSheet.create({
@@ -37,6 +53,18 @@ const styles = StyleSheet.create({
 
 
     },
+    container2: {
+        flex: 1,
+        paddingHorizontal: 50,
+        paddingVertical:20,
+        justifyContent: 'center',
+        alignItems: 'center',
+        backgroundColor: '#e97a3a',
+    },
+    image: {
+        paddingBottom: 15
+    }, 
+
     main: {
         fontFamily: "Gill Sans",
         fontSize: 45,
@@ -48,10 +76,11 @@ const styles = StyleSheet.create({
     buttonText: {
         textAlign: 'center',
         fontFamily: "Gill Sans",
+        fontWeight: '500',
         fontSize: 20,
-        color: 'white',
-        paddingHorizontal:60,
-        paddingVertical:4
+        color: 'black',
+        paddingHorizontal:40,
+        paddingVertical: 7
         
     },
     buttonz1: {
@@ -59,11 +88,10 @@ const styles = StyleSheet.create({
         borderRadius: 20,
         borderWidth: 2,
         borderStyle: 'solid',
-        color: 'black',
+        borderColor: '#fff4e4',
         overflow:'hidden',
-        underlayColor: 'black',
         marginBottom: 8,
-        width: 210
+        width: 240
     },
     buttonz2: {
         backgroundColor:'#e97a3a',
@@ -83,13 +111,13 @@ const styles = StyleSheet.create({
         alignSelf: 'center',
         width: 110, 
         height: 110,
-        marginBottom: 175,
+        marginBottom: 145,
     },
     smallText: {
         fontSize: 10, 
         color: 'white',
         textAlign: 'center',
-        marginBottom: 8
+        marginBottom: 80
     }
   });
 
