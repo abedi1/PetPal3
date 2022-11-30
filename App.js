@@ -2,11 +2,13 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet, ActivityIndicator} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import InitScreen from './src/screens/InitScreen';
-import SignInScreen from './src/screens/SignInScreen';
+//import SignInScreen from './src/screens/SignInScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import MatchesScreen from './src/screens/MatchesScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import SignTest from './src/screens/SignTest';
+//import SignTest2 from './src/screens/SignTest2';
+import SignInHeader from './src/screens/SignInHeader';
 
 
   
@@ -26,7 +28,12 @@ const App = () => {
     }
   
     if (activeScreen === 'TEST'){
-      return <SignTest isUserLoading={isUserLoading}/>
+      return (
+        <View  style={styles.container}>
+          <SignInHeader style={styles.header}></SignInHeader>
+          <SignTest style={styles.signin} isUserLoading={isUserLoading}/>
+        </View>
+      )
     }
 
     if (activeScreen === 'HOME'){
@@ -48,38 +55,28 @@ const App = () => {
    
     return (
       <View style={styles.container}>
-            <Text style={styles.main}>
-                PetPal</Text>
-            <Image
-                source={{
-                    uri: 'https://cdn.pixabay.com/photo/2016/04/07/18/57/silhouette-1314467__340.png',  
-                }}
-                style={styles.img}
-            />
-            <Text style={styles.smallText}>By creating an account or logging in, you are agreeing to our extensive Terms of Service and Privacy Policy</Text>
-            <TouchableOpacity style={styles.buttonz1} onPress={() => setActiveScreen('TEST')}>
-                <Text style={styles.buttonText1}>SIGN UP</Text>
-             </TouchableOpacity>
-             <TouchableOpacity style={styles.buttonz2} onPress={() => setActiveScreen('TEST')}>
-                <Text style={styles.buttonText2}>SIGN IN</Text>
-             </TouchableOpacity>
-             <TouchableOpacity style={styles.forgot} onPress={() => setActiveScreen('TEST')}>
-                <Text style={{fontSize: 15, color: 'white',}}>Forgot your password?</Text>
-             </TouchableOpacity>
-             
+        {renderPage()}
         </View>
-       //{renderPage()}
+       
     );
 }
 
 const styles = StyleSheet.create({
     container: {
       flex: 1,
+      paddingHorizontal: 50,
+      paddingVertical:20,
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#e97a3a',
-
-
+    },
+    header: {
+      flex: 1,
+      flexDirection: 'row'
+    },
+    signin: {
+      flex: 3,
+      flexDirection: 'row'
     },
     main: {
         fontFamily: "Gill Sans",
