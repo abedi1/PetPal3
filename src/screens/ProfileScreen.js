@@ -183,11 +183,11 @@ const ProfileScreen = () => {
         </Picker>
 
         <Pressable onPress={save} style={styles.button}>
-          <Text>Save</Text>
+          <Text style={styles.buttonText}>SAVE</Text>
         </Pressable>
 
-        <Pressable onPress={signOut} style={styles.button}>
-          <Text>Sign out</Text>
+        <Pressable onPress={signOut} style={styles.button2}>
+          <Text style={styles.buttonText}>SIGN OUT</Text>
         </Pressable>
       </ScrollView>
     </SafeAreaView>
@@ -202,14 +202,32 @@ const styles = StyleSheet.create({
   },
   container: {
     padding: 10,
+    backgroundColor: '#ededed',
   },
+  buttonText: {
+    textAlign: 'center',
+    fontFamily: "Gill Sans",
+    color: '#fff4e4',
+    
+},
   button: {
-    backgroundColor: '#F63A6E',
+    backgroundColor: '#e97a3a',
+    height: 25,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 2,
+    borderStyle: 'solid',
+    borderColor: 'black',
+    borderRadius: 20,
+    marginBottom: 12,
+  },
+  button2: {
+    backgroundColor: 'black',
     height: 25,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
-    margin: 10,
+    marginBottom: 150,
   },
   input: {
     margin: 10,

@@ -183,6 +183,7 @@ const AnimatedStack = props => {
 
 const styles = StyleSheet.create({
   root: {
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
@@ -213,6 +214,8 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     padding: 10,
+    marginTop: 75,
+    backgroundColor: '#ededed'
   },
   button: {
     width: 50,

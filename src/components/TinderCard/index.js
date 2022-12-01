@@ -23,11 +23,12 @@ const Card = props => {
           uri: imageUrl,
         }}
         style={styles.image}>
-        <View style={styles.cardInner}>
+        
+      </ImageBackground>
+      <View style={styles.cardInner}>
           <Text style={styles.name}>{name}</Text>
           <Text style={styles.bio}>{bio}</Text>
         </View>
-      </ImageBackground>
     </View>
   );
 };
@@ -48,6 +49,7 @@ const styles = StyleSheet.create({
     shadowRadius: 6.68,
 
     elevation: 11,
+    marginBottom: 50,
   },
   image: {
     width: '100%',
@@ -58,13 +60,16 @@ const styles = StyleSheet.create({
     justifyContent: 'flex-end',
   },
   cardInner: {
-    padding: 10,
+     //marginBottom: 350,
+   padding: 10,
+   backgroundColor: '#b5b5b5',
+   //opacity: 0.7,
   },
   name: {
     fontSize: 30,
     color: 'white',
     fontWeight: 'bold',
-    backgroundColor:'black',
+    backgroundColor: '#b5b5b5',
   },
   bio: {
     fontSize: 18,
