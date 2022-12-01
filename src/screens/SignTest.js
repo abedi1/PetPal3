@@ -93,14 +93,6 @@ const SignTest = () => {
             />
           </Pressable>
 
-          <Pressable onPress={() => setActiveScreen('LIKES')}>
-            <MaterialCommunityIcons
-              name="star-four-points"
-              size={topIconSize}
-              color={activeScreen === 'LIKES' ? activeColor : color}
-            />
-          </Pressable>
-
           <Pressable onPress={() => setActiveScreen('CHAT')}>
             <Ionicons
               name="ios-chatbubbles"
