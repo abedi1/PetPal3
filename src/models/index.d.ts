@@ -153,3 +153,4 @@ export declare type ChatRoomUser = LazyLoading extends LazyLoadingDisabled ? Eag
 export declare const ChatRoomUser: (new (init: ModelInit<ChatRoomUser, ChatRoomUserMetaData>) => ChatRoomUser) & {
   copyOf(source: ChatRoomUser, mutator: (draft: MutableModel<ChatRoomUser, ChatRoomUserMetaData>) => MutableModel<ChatRoomUser, ChatRoomUserMetaData> | void): ChatRoomUser;
 }
+
