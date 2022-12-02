@@ -643,3 +643,38 @@ export const syncChatRoomUsers = /* GraphQL */ `
     }
   }
 `;
+
+
+export const MyQuery = /* GraphQL */ `
+  query MyQuery ($id: ID!) {
+    getUser(id: $id) {
+      id
+      name
+      chatrooms {
+        items {
+          id
+          chatRoom {
+            id
+            Users {
+              items {
+                id
+                user {
+                  image
+                  name
+                  id
+                }
+                userID
+              }
+            }
+            createdAt
+            LastMessage {
+              id
+              createdAt
+              text
+            }
+          }
+        }
+      }
+    }
+  }
+`;

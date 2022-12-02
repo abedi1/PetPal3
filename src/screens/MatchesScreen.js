@@ -1,7 +1,8 @@
 import React, {useState, useEffect} from 'react';
 import {API, graphqlOperation} from 'aws-amplify';
 import {createChatRoom, createChatRoomUser} from '../graphql/mutations';
-import {getUser} from '../graphql/queries';
+import {MyQuery} from '../graphql/queries';
+import getCommonChatRoomWithUser from '../serevices/chatRoomServices';
 
 import {
   View,
@@ -51,6 +52,12 @@ const MatchesScreen = () => {
   pressed = matchUser => async () => {
     //check if the chatroom exists
     //create chatroom
+    const existingChatRoom = await getCommonChatRoomWithUser(me.id, matchUser.id);
+
+    if(existingChatRoom){
+      navigator.navigate('Chat', {id: existingChatRoom.id});
+      return;
+    }
     const newChatRoomData = await API.graphql(
       graphqlOperation(createChatRoom, {input: {}}),
     );
@@ -62,17 +69,18 @@ const MatchesScreen = () => {
 
     await API.graphql(
       graphqlOperation(createChatRoomUser, {
-        input: {chatRoomID: newChatRoom.id, userID: me.id},
+        input: {chatRoomID: newChatRoom.id, userID: matchUser.id},
       }),
     );
 
     await API.graphql(
       graphqlOperation(createChatRoomUser, {
-        input: {chatRoomID: newChatRoom.id, userID: matchUser.id},
+        input: {chatRoomID: newChatRoom.id, userID: me.id},
       }),
     );
 
-   console.log(newChatRoom.Users.items);
+
+
 
     //add clicked user to the chatroom
     //add auth user to the chatroom
@@ -100,9 +108,9 @@ const MatchesScreen = () => {
   useEffect(() => {
     const fetchChatRooms = async () => {
       const response = await API.graphql(
-        graphqlOperation(getUser, {id: me.id}),
-      ); 
-      console.log("hello");
+        graphqlOperation(MyQuery, {id: me.id}),
+      );
+      //console.log(response.data.getUser.chatrooms.items);
       setChatRooms(response.data.getUser.chatrooms.items);
     };
 
@@ -148,7 +156,7 @@ const MatchesScreen = () => {
         </View>
         <FlatList
           data={chatRooms}
-          renderItem={({item}) => <ChatListItem chat={item} />}
+          renderItem={({item}) => <ChatListItem chat={item.chatRoom} me={me} />}
         />
       </View>
     </SafeAreaView>
