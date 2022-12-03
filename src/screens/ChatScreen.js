@@ -20,29 +20,27 @@ import React from 'react';
 const ChatScreen = () => {
   const navigation = useNavigation();
   const route = useRoute();
-  
+  const chatroomID = route.params.id;
+  console.log(chatroomID)
   useEffect(() => {
     navigation.setOptions({title: route.params.name});
   }, [route.params]);
 
   return (
-      <KeyboardAvoidingView
-       behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
-        style={styles.bg}
-        >
+    <KeyboardAvoidingView
+      behavior={Platform.OS === 'ios' ? 'padding' : 'height'}
+      style={styles.bg}>
+      <ImageBackground source={bg} style={styles.bg}>
+        <FlatList
+          data={messages}
+          renderItem={({item}) => <Message message={item} />}
+          style={{padding: 10}}
+          inverted
+        />
 
-        <ImageBackground source={bg} style={styles.bg}>
-          <FlatList
-            data={messages}
-            renderItem={({item}) => <Message message={item} />}
-            style={{padding: 10}}
-            inverted
-          />
-
-        <InputBox />
-        </ImageBackground>
-
-      </KeyboardAvoidingView>
+        <InputBox chatroomID={chatroomID} />
+      </ImageBackground>
+    </KeyboardAvoidingView>
   );
 };
 

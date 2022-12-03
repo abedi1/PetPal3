@@ -1,24 +1,54 @@
 import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useState} from 'react';
+import {API, graphqlOperation, Auth} from 'aws-amplify';
+import {createMessage} from '../../graphql/mutations';
+import {Match, User} from '../../models';
+import {DataStore} from 'aws-amplify';
+import React, {useEffect} from 'react';
 
-const InputBox = () => {
-  const [newMessage, setNewMessage] = useState('');
+const InputBox = ({chatroomID}) => {
+  const [text, setText] = useState('');
+  const [me, setMe] = useState(null);
 
-  const onSend = () => {
-   console.warn('Send a new message: ', newMessage);
+  useEffect(() => {
+    const getCurrentUser = async () => {
+      const user = await Auth.currentAuthenticatedUser();
 
-   setNewMessage('');
- };
- 
+      const dbUsers = await DataStore.query(User, u =>
+        u.sub('eq', user.attributes.sub),
+      );
+      if (!dbUsers || dbUsers.length <= 0) {
+        setMe(null);
+        return;
+      }
+      setMe(dbUsers[0]);
+    };
+    getCurrentUser();
+  }, []);
+
+  const onSend = async () => {
+    console.warn('Send a new message: ', text);
+
+    const newMessage = {
+      chatroomID,
+      text,
+      userID: me.id,
+    };
+
+    await API.graphql(graphqlOperation(createMessage, {input: newMessage}));
+
+    setText('');
+  };
+
   return (
     <View style={styles.container}>
       <Icon name="plus" type="font-awesome" size={24} color="royalblue" />
       <TextInput
-      value={newMessage}
-      onChangeText={setNewMessage}
-      multiline
-      style={styles.input}
+        value={text}
+        onChangeText={setText}
+        multiline
+        style={styles.input}
       />
       <Icon
         name="send"

@@ -55,7 +55,11 @@ const MatchesScreen = () => {
     const existingChatRoom = await getCommonChatRoomWithUser(me.id, matchUser.id);
 
     if(existingChatRoom){
-      navigator.navigate('Chat', {id: existingChatRoom.id});
+      navigator.navigate('Chat', {
+        id: existingChatRoom.id,
+        name: matchUser?.name,
+      });
+      console.log("hello");
       return;
     }
     const newChatRoomData = await API.graphql(
