@@ -8,11 +8,14 @@ import Ionicons from 'react-native-vector-icons/Ionicons';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
 import {DataStore, Auth} from 'aws-amplify';
 import {User, Match} from '../models';
+import Modal from 'react-native-modal';
 
 const HomeScreen = ({isUserLoading}) => {
   const [users, setUsers] = useState([]);
   const [me, setMe] = useState(null);
   const [matchesIds, setMatchesIds] = useState([]); // all ids of people who we have already matched
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -122,23 +125,33 @@ const HomeScreen = ({isUserLoading}) => {
 
   return (
     <View style={styles.pageContainer}>
+      <Modal
+        isVisible={isModalVisible}
+        animationInTiming={1000}
+        animationOutTiming={1000}
+        backdropTransitionInTiming={800}
+        backdropTransitionOutTiming={800}
+        onBackdropPress={handleModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalHeadingText}>New Match</Text>
+          </View>
+          <View style={styles.modalBody}>
+            <Text>
+              Congratulations you matched. Continue swiping or go to the chat screen and start messaging them.
+            </Text>
+          </View>
+          <View style = {styles.modalFooter}>
+            <Button title="Close" onPress={handleModal} color ={'#e97a3a'} borderRadius={100} />
+          </View>
+        </View>
+      </Modal>
       <AnimatedStack
         data={users}
         renderItem={({item}) => <Card user={item} />}
         onSwipeLeft={onSwipeLeft}
         onSwipeRight={onSwipeRight}
       />
-      {/* <View style={styles.icons}>
-        <View style={styles.button}>
-          <Entypo name="cross" size={bottomIconSize} color="#F76C6B" />
-        </View>
-        <View style={styles.button}>
-          <FontAwesome name="question" size={bottomIconSize} color="#3AB4CC" />
-        </View>
-        <View style={styles.button}>
-          <FontAwesome name="heart" size={bottomIconSize} color="#4FCC94" />
-        </View>
-      </View> */}
     </View>
   );
 };
