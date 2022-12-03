@@ -1,12 +1,17 @@
 import {View, Text, StyleSheet} from 'react-native';
 import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
+import {Match, User} from '../../models';
+import React, {useEffect, useState} from 'react';
+import {DataStore} from 'aws-amplify';
+
 dayjs.extend(relativeTime);
 
-const Message = ({message}) => {
+const Message = ({message, me}) => {
   const isMyMessage = () => {
-    return message.user.id === 'u1';
+    return message.userID === me;
   };
+  console.log(me);
 
   return (
     <View
@@ -21,7 +26,7 @@ const Message = ({message}) => {
       <Text style={styles.time}>{dayjs(message.createdAt).fromNow(true)}</Text>
     </View>
   );
-};
+  };
 
 const styles = StyleSheet.create({
   container: {

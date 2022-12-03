@@ -26,7 +26,7 @@ const InputBox = ({chatroomID}) => {
     };
     getCurrentUser();
   }, []);
-
+  //console.log(me.id);
   const onSend = async () => {
     console.warn('Send a new message: ', text);
 
@@ -37,7 +37,6 @@ const InputBox = ({chatroomID}) => {
     };
 
     await API.graphql(graphqlOperation(createMessage, {input: newMessage}));
-
     setText('');
   };
 
