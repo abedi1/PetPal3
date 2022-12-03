@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet} from 'react-native';
+import {View, StyleSheet, Text, Button} from 'react-native';
 import Card from '../components/TinderCard';
 
 import AnimatedStack from '../components/AnimatedStack';
@@ -178,6 +178,36 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     padding: 10,
     borderRadius: 50,
+  },
+  modalContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#000',
+    borderStyle: 'solid',
+  },
+  modalHeader: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalHeadingText: {
+    paddingTop: 10,
+    textAlign: 'center',
+    fontSize: 24,
+  },
+  modalText: {
+    fontSize: 18,
+  },
+  modalBody: {
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    minHeight: 100,
+  },
+  modalFooter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    flexDirection: 'row',
   },
 });
 

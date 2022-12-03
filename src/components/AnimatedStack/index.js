@@ -286,11 +286,6 @@ const styles = StyleSheet.create({
     padding: 10,
     flexDirection: 'row',
   },
-  modalButtonText: {
-    textAlign: 'center',
-    color: '#fff4e4',
-    
-},
 });
 
 export default AnimatedStack;
