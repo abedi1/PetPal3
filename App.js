@@ -1,164 +1,148 @@
-import 'react-native-gesture-handler';
-import '@azure/core-asynciterator-polyfill';
 import React, {useState, useEffect} from 'react';
-import {
-  SafeAreaView,
-  StyleSheet,
-  Pressable,
-  View,
-  ActivityIndicator,
-  Text,
-  Dimensions,
-} from 'react-native';
-import Navigator from './src/navigation/index';
+import {SafeAreaView, Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet, ActivityIndicator} from 'react-native';
+import {GestureHandlerRootView} from 'react-native-gesture-handler';
+import InitScreen from './src/screens/InitScreen';
+//import SignInScreen from './src/screens/SignInScreen';
 import HomeScreen from './src/screens/HomeScreen';
 import MatchesScreen from './src/screens/MatchesScreen';
-import {GestureHandlerRootView} from 'react-native-gesture-handler';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-import Ionicons from 'react-native-vector-icons/Ionicons';
-import FontAwesome from 'react-native-vector-icons/FontAwesome';
-import {Amplify, Hub, DataStore, Auth} from 'aws-amplify';
-import {withAuthenticator} from 'aws-amplify-react-native';
-import awsconfig from './src/aws-exports';
 import ProfileScreen from './src/screens/ProfileScreen';
-import {User} from './src/models/';
-import {NavigationContainer} from '@react-navigation/native';
-import {createStackNavigator} from '@react-navigation/stack';
-import ChatScreen from './src/screens/ChatScreen';
+import SignTest from './src/screens/SignTest';
+//import SignTest2 from './src/screens/SignTest2';
+import SignInHeader from './src/screens/SignInHeader';
 
-const Stack = createStackNavigator();
 
-Amplify.configure({
-  awsconfig,
-  Analytics: {
-    disabled: true,
-  },
-
-});
+  
 
 const App = () => {
-  const color = '#b5b5b5';
-  const activeColor = '#F76C6B';
-  const topIconSize = 30;
-  const [activeScreen, setActiveScreen] = useState('HOME');
+
+
+  const [activeScreen, setActiveScreen] = useState('INIT');
   const [isUserLoading, setIsUserLoading] = useState(true)
-  const [me, setMe] = useState(null);
 
+  const renderPage = () =>{
+    if (activeScreen === 'INIT') {
+      return <InitScreen/>
+    }
 
-  useEffect(() => {
-    const listener = Hub.listen('datastore', async hubData => {
-      const {event, data} = hubData.payload;
-      if (event === 'modelSynced' && data?.model?.name === 'User') {
-        console.log('User Model has finished syncing');
-        setIsUserLoading(false);
-      }
-    });
-
-    return () => listener(); //removes listener when apllication closes
-  }, []);
-
-  useEffect(() => {
-    const getCurrentUser = async () => {
-      const user = await Auth.currentAuthenticatedUser();
-
-      const dbUsers = await DataStore.query(User, u =>
-        u.sub('eq', user.attributes.sub),
-      );
-      if (!dbUsers || dbUsers.length <= 0) {
-        setMe(null)
-        setActiveScreen('PROFILE'); // If they don't have an account make the default screen be profile.
-        return;
-      }
-      setMe(dbUsers[0]);
-    };
-    getCurrentUser();
-  }, [isUserLoading]);
-
-
- const renderPage = () =>{
-  if (activeScreen === 'HOME'){
-    return <HomeScreen isUserLoading={isUserLoading}/>
-  }
-
-  if (isUserLoading){
-    return <ActivityIndicator style ={{flex:1}}/>
-  }
-
-  if (activeScreen === 'CHAT'){
-     return <Navigator />;
-      // return (
-      //     <NavigationContainer>
-      //       <Stack.Navigator initialRouteName="Chats">
-      //         <Stack.Screen name="Chats" component={MatchesScreen} />
-      //         <Stack.Screen name="Chat" component={ChatScreen} />
-      //       </Stack.Navigator>
-      //     </NavigationContainer>
-      // );
-  }
-  if (activeScreen === 'PROFILE'){
-    return <ProfileScreen/>
-  }
- }
-
-  return (
-    <SafeAreaView style={styles.root}>
-      <GestureHandlerRootView style={styles.pageContainer}>
-        <View style={styles.topNavigation}>
-          <Pressable onPress={() => setActiveScreen('HOME')}>
-            <MaterialIcons
-              name="pets"
-              size={topIconSize}
-              color={activeScreen === 'HOME' ? activeColor : color}
-            />
-          </Pressable>
-
-          <Pressable onPress={() => setActiveScreen('LIKES')}>
-            <MaterialCommunityIcons
-              name="star-four-points"
-              size={topIconSize}
-              color={activeScreen === 'LIKES' ? activeColor : color}
-            />
-          </Pressable>
-
-          <Pressable onPress={() => setActiveScreen('CHAT')}>
-            <Ionicons
-              name="ios-chatbubbles"
-              size={topIconSize}
-              color={activeScreen === 'CHAT' ? activeColor : color}
-            />
-          </Pressable>
-
-          <Pressable onPress={() => setActiveScreen('PROFILE')}>
-            <FontAwesome
-              name="user"
-              size={topIconSize}
-              color={activeScreen === 'PROFILE' ? activeColor : color}
-            />
-          </Pressable>
+    if (activeScreen === 'SIGNIN') {
+      return <SignInScreen isUserLoading={isUserLoading}/>
+    }
+  
+    if (activeScreen === 'TEST'){
+      return (
+        <View  style={styles.container}>
+          <SignInHeader style={styles.header}></SignInHeader>
+          <SignTest style={styles.signin} isUserLoading={isUserLoading}/>
         </View>
+      )
+    }
 
+    if (activeScreen === 'HOME'){
+      return <HomeScreen isUserLoading={isUserLoading}/>
+    }
+  
+    if (isUserLoading){
+      return <ActivityIndicator style ={{flex:1}}/>
+    }
+  
+    if (activeScreen === 'CHAT'){
+      return <MatchesScreen/>
+    }
+    if (activeScreen === 'PROFILE'){
+      return <ProfileScreen/>
+    }
+   }
+
+   
+    return (
+      <View style={styles.container}>
         {renderPage()}
-      </GestureHandlerRootView>
-    </SafeAreaView>
-  );
-};
+        </View>
+       
+    );
+}
 
 const styles = StyleSheet.create({
-  root: {
-    flex: 1,
+    container: {
+      flex: 1,
+      paddingHorizontal: 50,
+      paddingVertical:20,
+      justifyContent: 'center',
+      alignItems: 'center',
+      backgroundColor: '#e97a3a',
+    },
+    header: {
+      flex: 1,
+      flexDirection: 'row'
+    },
+    signin: {
+      flex: 3,
+      flexDirection: 'row'
+    },
+    main: {
+        fontFamily: "Gill Sans",
+        fontSize: 45,
+        fontWeight: "bold",
+        color: 'white',
+        marginBottom: 8
+        
+    },
+    buttonText1: {
+        textAlign: 'center',
+        fontFamily: "Gill Sans",
+        fontSize: 20,
+        color: 'white',
+        paddingHorizontal:60,
+        paddingVertical:4
+        
+    },
+    buttonText2: {
+      textAlign: 'center',
+      fontFamily: "Gill Sans",
+      fontSize: 20,
+      color: 'white',
+      paddingHorizontal:60,
+      paddingVertical:4
+      
   },
-  pageContainer: {
-  //  justifyContent: 'center',
-  //  alignItems: 'center',
-    flex: 1,
-  },
-  topNavigation: {
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    width: '100%',
-    padding: 10,
-  },
-});
+    buttonz1: {
+        backgroundColor:'#e97a3a',
+        borderRadius: 20,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        color: 'black',
+        overflow:'hidden',
+        underlayColor: 'black',
+        marginBottom: 8,
+        width: 210
+    },
+    buttonz2: {
+        backgroundColor:'#e97a3a',
+        borderRadius: 20,
+        borderWidth: 2,
+        borderStyle: 'solid',
+        color: 'black',
+        overflow:'hidden',
+        underlayColor: 'black',
+        marginBottom: 8,
+        width: 250
+    },
+    forgot: {
+        backgroundColor:'#e97a3a',
+    },
+    img: {
+        alignSelf: 'center',
+        width: 110, 
+        height: 110,
+        marginBottom: 175,
+    },
+    smallText: {
+        fontSize: 10, 
+        color: 'white',
+        textAlign: 'center',
+        marginBottom: 8,
+        marginHorizontal:10
+    }
+  });
 
-export default withAuthenticator(App);
+export default App;

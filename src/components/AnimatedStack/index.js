@@ -1,5 +1,13 @@
 import React, {useState, useEffect} from 'react';
-import {View, StyleSheet, useWindowDimensions, Text} from 'react-native';
+import {
+  View,
+  StyleSheet,
+  useWindowDimensions,
+  Text,
+  Pressable,
+  TouchableOpacity,
+  Button
+} from 'react-native';
 
 import Animated, {
   useSharedValue,
@@ -13,11 +21,17 @@ import Animated, {
 import {PanGestureHandler} from 'react-native-gesture-handler';
 import Like from '../../../assets/images/LIKE.png';
 import Nope from '../../../assets/images/nope.png';
+import Entypo from 'react-native-vector-icons/Entypo';
+import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import Modal from 'react-native-modal';
 
 const ROTATION = 60;
 const SWIPE_VELOCITY = 800;
+const bottomIconSize = 30;
 
 const AnimatedStack = props => {
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const handleModal = () => setIsModalVisible(() => !isModalVisible);
   const {data, renderItem, onSwipeRight, onSwipeLeft} = props;
 
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -97,6 +111,18 @@ const AnimatedStack = props => {
     },
   });
 
+  const wrapperSwipeLeft = () => {
+    console.log('got press');
+    setCurrentIndex(currentIndex + 1);
+    onSwipeLeft(currentProfile);
+  };
+
+  const wrapperSwipeRight = () => {
+    console.log('got press');
+    setCurrentIndex(currentIndex + 1);
+    onSwipeRight(currentProfile);
+  };
+
   useEffect(() => {
     translateX.value = 0;
     setNextIndex(currentIndex + 1);
@@ -104,6 +130,30 @@ const AnimatedStack = props => {
 
   return (
     <View style={styles.root}>
+      <Modal
+        isVisible={isModalVisible}
+        animationInTiming={1000}
+        animationOutTiming={1000}
+        backdropTransitionInTiming={800}
+        backdropTransitionOutTiming={800}
+        onBackdropPress={handleModal}>
+        <View style={styles.modalContainer}>
+          <View style={styles.modalHeader}>
+            <Text style={styles.modalHeadingText}>HELP</Text>
+          </View>
+          <View style={styles.modalBody}>
+            <Text>
+              If you like the profile swipe right or press the heart button. If
+              you don't like the profile swipe left or press the x button. If
+              the other person also swipes right on you then it's a MATCH. You
+              will be able to message them and discuss being pet pals!
+            </Text>
+          </View>
+          <View style = {styles.modalFooter}>
+            <Button title="Close" onPress={handleModal} color ={'#e97a3a'} borderRadius={100} />
+          </View>
+        </View>
+      </Modal>
       {nextProfile && (
         <View style={styles.nextCardContainer}>
           <Animated.View style={[styles.animatedCard, nextCardStyle]}>
@@ -111,7 +161,6 @@ const AnimatedStack = props => {
           </Animated.View>
         </View>
       )}
-
       {currentProfile ? (
         <PanGestureHandler onGestureEvent={gestureHandler}>
           <Animated.View style={[styles.animatedCard, cardStyle]}>
@@ -133,12 +182,38 @@ const AnimatedStack = props => {
           <Text>Oops, No More users</Text>
         </View>
       )}
+      {currentProfile ? (
+        <View style={styles.icons}>
+          <View style={styles.button}>
+            <TouchableOpacity onPress={wrapperSwipeLeft}>
+              <Entypo name="cross" size={bottomIconSize} color="#F76C6B" />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.button}>
+            <TouchableOpacity onPress={handleModal}>
+              <FontAwesome
+                name="question"
+                size={bottomIconSize}
+                color="#3AB4CC"
+              />
+            </TouchableOpacity>
+          </View>
+          <View style={styles.button}>
+            <TouchableOpacity onPress={wrapperSwipeRight}>
+              <FontAwesome name="heart" size={bottomIconSize} color="#4FCC94" />
+            </TouchableOpacity>
+          </View>
+        </View>
+      ) : (
+        <View></View>
+      )}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   root: {
+    marginTop: 50,
     justifyContent: 'center',
     alignItems: 'center',
     flex: 1,
@@ -163,6 +238,53 @@ const styles = StyleSheet.create({
     top: 10,
     zIndex: 1,
     elevation: 1,
+  },
+  icons: {
+    flexDirection: 'row',
+    justifyContent: 'space-around',
+    width: '100%',
+    padding: 10,
+    marginTop: 75,
+    backgroundColor: '#ededed',
+  },
+  button: {
+    width: 50,
+    height: 50,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: 'white',
+    padding: 10,
+    borderRadius: 50,
+  },
+  modalContainer: {
+    backgroundColor: '#ffffff',
+    borderRadius: 25,
+    borderWidth: 1,
+    borderColor: '#000',
+    borderStyle: 'solid',
+  },
+  modalHeader: {
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+  modalHeadingText: {
+    paddingTop: 10,
+    textAlign: 'center',
+    fontSize: 24,
+  },
+  modalText: {
+    fontSize: 18,
+  },
+  modalBody: {
+    justifyContent: 'center',
+    paddingHorizontal: 15,
+    minHeight: 100,
+  },
+  modalFooter: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    padding: 10,
+    flexDirection: 'row',
   },
 });
 
