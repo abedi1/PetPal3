@@ -1,0 +1,16 @@
+type Match @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  User1: User @hasOne
+  User2: User @hasOne
+  isMatch: Boolean!
+}
+
+type User @model @auth(rules: [{allow: public}]) {
+  id: ID!
+  name: String!
+  bio: String!
+  hasPet: Boolean!
+  image: String
+  sub: String!
+}
+ 

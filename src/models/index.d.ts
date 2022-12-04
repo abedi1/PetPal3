@@ -7,7 +7,7 @@ type ChatRoomMetaData = {
 }
 
 type MessageMetaData = {
-  readOnlyFields: 'createdAt' | 'updatedAt';
+  readOnlyFields: 'updatedAt';
 }
 
 type UserMetaData = {
@@ -50,19 +50,19 @@ export declare const ChatRoom: (new (init: ModelInit<ChatRoom, ChatRoomMetaData>
 
 type EagerMessage = {
   readonly id: string;
+  readonly createdAt: string;
   readonly text: string;
   readonly chatroomID: string;
   readonly userID: string;
-  readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 
 type LazyMessage = {
   readonly id: string;
+  readonly createdAt: string;
   readonly text: string;
   readonly chatroomID: string;
   readonly userID: string;
-  readonly createdAt?: string | null;
   readonly updatedAt?: string | null;
 }
 

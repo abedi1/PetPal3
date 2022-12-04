@@ -1,10 +1,16 @@
 import 'react-native-gesture-handler';
 import '@azure/core-asynciterator-polyfill';
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, StyleSheet, Pressable, View, ActivityIndicator} from 'react-native';
+import {
+  SafeAreaView,
+  StyleSheet,
+  Pressable,
+  View,
+  ActivityIndicator,
+  Text
+} from 'react-native';
 
 import HomeScreen from './HomeScreen';
-import MatchesScreen from './MatchesScreen';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -15,8 +21,7 @@ import {withAuthenticator} from 'aws-amplify-react-native';
 import awsconfig from '../aws-exports';
 import ProfileScreen from './ProfileScreen';
 import {User} from '../models';
-
-
+import Navigator from '../navigation/index';
 
 Amplify.configure({
   awsconfig,
@@ -30,9 +35,8 @@ const SignTest = () => {
   const activeColor = 'black';
   const topIconSize = 30;
   const [activeScreen, setActiveScreen] = useState('HOME');
-  const [isUserLoading, setIsUserLoading] = useState(true)
+  const [isUserLoading, setIsUserLoading] = useState(true);
   const [me, setMe] = useState(null);
-
 
   useEffect(() => {
     const listener = Hub.listen('datastore', async hubData => {
@@ -54,7 +58,7 @@ const SignTest = () => {
         u.sub('eq', user.attributes.sub),
       );
       if (!dbUsers || dbUsers.length <= 0) {
-        setMe(null)
+        setMe(null);
         setActiveScreen('PROFILE'); // If they don't have an account make the default screen be profile.
         return;
       }
@@ -63,23 +67,23 @@ const SignTest = () => {
     getCurrentUser();
   }, [isUserLoading]);
 
+  const renderPage = () => {
+    if (activeScreen === 'HOME') {
+      return <HomeScreen isUserLoading={isUserLoading} />;
+    }
 
- const renderPage = () =>{
-  if (activeScreen === 'HOME'){
-    return <HomeScreen isUserLoading={isUserLoading}/>
-  }
+    if (isUserLoading) {
+      return <ActivityIndicator style={{flex: 1}} />;
+    }
 
-  if (isUserLoading){
-    return <ActivityIndicator style ={{flex:1}}/>
-  }
+    if (activeScreen === 'CHAT') {
+      return <Navigator/>
+    }
 
-  if (activeScreen === 'CHAT'){
-    return <MatchesScreen/>
-  }
-  if (activeScreen === 'PROFILE'){
-    return <ProfileScreen/>
-  }
- }
+    if (activeScreen === 'PROFILE') {
+      return <ProfileScreen />;
+    }
+  };
 
   return (
     <SafeAreaView style={styles.root}>
@@ -111,7 +115,6 @@ const SignTest = () => {
         </View>
 
         {renderPage()}
-
       </GestureHandlerRootView>
     </SafeAreaView>
   );
@@ -121,11 +124,9 @@ const styles = StyleSheet.create({
   root: {
     flex: 1,
     flexDirection: 'row',
-    width: "100%",
+    width: '100%',
   },
   pageContainer: {
-    justifyContent: 'center',
-    alignItems: 'center',
     flex: 1,
   },
   topNavigation: {
@@ -134,7 +135,7 @@ const styles = StyleSheet.create({
     width: '100%',
     padding: 10,
     //paddingTop:15,
-    backgroundColor: '#e97a3a'
+    backgroundColor: '#e97a3a',
   },
 });
 

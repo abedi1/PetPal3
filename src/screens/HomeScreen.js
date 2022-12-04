@@ -14,6 +14,7 @@ const HomeScreen = ({isUserLoading}) => {
   const [users, setUsers] = useState([]);
   const [me, setMe] = useState(null);
   const [matchesIds, setMatchesIds] = useState([]); // all ids of people who we have already matched
+  const [chatIds, setChatIds] = useState([]);
   const [isModalVisible, setIsModalVisible] = useState(false);
   const handleModal = () => setIsModalVisible(() => !isModalVisible);
 
@@ -52,6 +53,27 @@ const HomeScreen = ({isUserLoading}) => {
       );
     };
     fetchMatches();
+  }, [me]);
+
+  useEffect(() => {
+    if (!me) {
+      return;
+    }
+    const fetchChatUsers = async () => {
+      const result = await DataStore.query(Match, m =>
+        m
+          .isMatch('eq', true)
+          .or(m => m.matchUser1Id('eq', me.id).matchUser2Id('eq', me.id)),
+      );
+      setMatchesIds(
+        result.map(match =>
+          Match.matchUser1Id === me.id
+            ? match.matchUser2Id
+            : match.matchUser1Id,
+        ),
+      );
+    };
+    fetchChatUsers();
   }, [me]);
 
   useEffect(() => {
@@ -105,7 +127,7 @@ const HomeScreen = ({isUserLoading}) => {
     );
     if (theirMatches.length > 0) {
       // Did they already swipe right on us
-      console.warn('This is a new match');
+      isModalVisible;
       const theirMatch = theirMatches[0]; // the first match
       DataStore.save(
         Match.copyOf(theirMatch, updated => (updated.isMatch = true)),

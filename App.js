@@ -2,15 +2,11 @@ import React, {useState, useEffect} from 'react';
 import {SafeAreaView, Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet, ActivityIndicator} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import InitScreen from './src/screens/InitScreen';
-//import SignInScreen from './src/screens/SignInScreen';
 import HomeScreen from './src/screens/HomeScreen';
-import MatchesScreen from './src/screens/MatchesScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import SignTest from './src/screens/SignTest';
-//import SignTest2 from './src/screens/SignTest2';
 import SignInHeader from './src/screens/SignInHeader';
-
-
+import Navigator from './src/navigation/index';
   
 
 const App = () => {
@@ -45,7 +41,7 @@ const App = () => {
     }
   
     if (activeScreen === 'CHAT'){
-      return <MatchesScreen/>
+      return <Navigator/>;
     }
     if (activeScreen === 'PROFILE'){
       return <ProfileScreen/>

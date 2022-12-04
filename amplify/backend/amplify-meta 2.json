@@ -1,0 +1,107 @@
+{
+  "providers": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-petpal-staging-202101-authRole",
+      "UnauthRoleArn": "arn:aws:iam::810734987857:role/amplify-petpal-staging-202101-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::810734987857:role/amplify-petpal-staging-202101-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-petpal-staging-202101-deployment",
+      "UnauthRoleName": "amplify-petpal-staging-202101-unauthRole",
+      "StackName": "amplify-petpal-staging-202101",
+      "StackId": "arn:aws:cloudformation:us-east-1:810734987857:stack/amplify-petpal-staging-202101/5f28fcd0-5890-11ed-8a17-1263bcf9735d",
+      "AmplifyAppId": "d1ywrw50dmqad4"
+    }
+  },
+  "auth": {
+    "PetPal": {
+      "service": "Cognito",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "customAuth": false,
+      "frontendAuthConfig": {
+        "socialProviders": [
+          "GOOGLE"
+        ],
+        "usernameAttributes": [
+          "EMAIL"
+        ],
+        "signupAttributes": [],
+        "passwordProtectionSettings": {
+          "passwordPolicyMinLength": 8,
+          "passwordPolicyCharacters": []
+        },
+        "mfaConfiguration": "OFF",
+        "mfaTypes": [
+          "SMS"
+        ],
+        "verificationMechanisms": [
+          "EMAIL"
+        ]
+      },
+      "output": {
+        "UserPoolId": "us-east-1_VuuxD1Bof",
+        "AppClientIDWeb": "5jobpu98vmnv8a56gpgeumqopd",
+        "AppClientID": "6p0q09rtl081v4fpa27pa5u4p9",
+        "HostedUIDomain": "fryvn1u6fo0h-staging",
+        "IdentityPoolId": "us-east-1:c7d1ecd3-ff89-403a-8b4f-3242bbc9738c",
+        "UserPoolArn": "arn:aws:cognito-idp:us-east-1:810734987857:userpool/us-east-1_VuuxD1Bof",
+        "IdentityPoolName": "testAuthIdentityPool__staging",
+        "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
+        "UserPoolName": "PetPal"
+      },
+      "lastPushTimeStamp": "2022-11-29T20:49:41.390Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/auth/PetPal-cloudformation-template.json",
+        "logicalId": "authPetPal"
+      }
+    }
+  },
+  "api": {
+    "PetPal": {
+      "service": "AppSync",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "authConfig": {
+          "defaultAuthentication": {
+            "authenticationType": "API_KEY",
+            "apiKeyConfig": {
+              "apiKeyExpirationDays": 30,
+              "description": "api key description"
+            }
+          },
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AWS_IAM"
+            }
+          ]
+        },
+        "GraphQLAPIIdOutput": "3xan632vobhsppx5zl4btnekwi",
+        "GraphQLAPIEndpointOutput": "https://naq6rvonafcxzc5gnuitjpaxyq.appsync-api.us-east-1.amazonaws.com/graphql",
+        "GraphQLAPIKeyOutput": "da2-3xlfownauzbj3fykswoiqbjfm4"
+      },
+      "lastPushTimeStamp": "2022-11-29T20:49:41.443Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/api/cloudformation-template.json",
+        "logicalId": "apiPetPal"
+      },
+      "lastPushDirHash": "kdukVVxLeLCa+RppFeIHCUjdxLY="
+    }
+  },
+  "storage": {
+    "s3petpalstorage835c48e2": {
+      "service": "S3",
+      "providerPlugin": "awscloudformation",
+      "dependsOn": [],
+      "output": {
+        "BucketName": "petpal-storage-835c48e2202101-staging",
+        "Region": "us-east-1"
+      },
+      "lastPushTimeStamp": "2022-11-29T20:49:41.393Z",
+      "providerMetadata": {
+        "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
+        "logicalId": "storages3petpalstorage835c48e2"
+      }
+    }
+  }
+}
