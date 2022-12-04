@@ -2,12 +2,12 @@ import {View, Text, TextInput, StyleSheet} from 'react-native';
 import {Icon} from 'react-native-elements';
 import {useState} from 'react';
 import {API, graphqlOperation, Auth} from 'aws-amplify';
-import {createMessage} from '../../graphql/mutations';
+import {createMessage, updateChatRoom} from '../../graphql/mutations';
 import {Match, User} from '../../models';
 import {DataStore} from 'aws-amplify';
 import React, {useEffect} from 'react';
 
-const InputBox = ({chatroomID}) => {
+const InputBox = ({chatRoom}) => {
   const [text, setText] = useState('');
   const [me, setMe] = useState(null);
 
@@ -31,13 +31,22 @@ const InputBox = ({chatroomID}) => {
     console.warn('Send a new message: ', text);
 
     const newMessage = {
-      chatroomID,
+      chatroomID:chatRoom.id,
       text,
       userID: me.id,
     };
 
-    await API.graphql(graphqlOperation(createMessage, {input: newMessage}));
+    const newMessageData = await API.graphql(graphqlOperation(createMessage, {input: newMessage}));
     setText('');
+
+    await API.graphql(
+      graphqlOperation(updateChatRoom, {
+        input: {
+          chatRoomLastMessageId: newMessageData.data.createMessage.id,
+          id: chatRoom.id,
+        },
+      })
+    );
   };
 
   return (

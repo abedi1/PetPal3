@@ -10,9 +10,9 @@ import {
   StyleSheet,
   SafeAreaView,
   Image,
-  FlatList, 
+  FlatList,
   Pressable,
-  AppRegistry
+  AppRegistry,
 } from 'react-native';
 import users from '../../assets/data/animals';
 import {DataStore, Auth} from 'aws-amplify';
@@ -20,15 +20,14 @@ import {Match, User} from '../models';
 import ChatListItem from '../components/ChatListItem';
 import ChatScreen from './ChatScreen';
 
-//dummy data import 
+//dummy data import
 import bg from '../../assets/images/BG.png';
 import Message from '../components/Message';
 import messages from '../../assets/data/messages.json';
 import chats from '../../assets/data/chats.json';
-import { create } from 'react-test-renderer';
+import {create} from 'react-test-renderer';
 import Navigator from '../navigation/index';
 import {useNavigation, useRoute} from '@react-navigation/native';
-
 
 const chat = {
   id: '1',
@@ -52,14 +51,17 @@ const MatchesScreen = () => {
   pressed = matchUser => async () => {
     //check if the chatroom exists
     //create chatroom
-    const existingChatRoom = await getCommonChatRoomWithUser(me.id, matchUser.id);
+    const existingChatRoom = await getCommonChatRoomWithUser(
+      me.id,
+      matchUser.id,
+    );
 
-    if(existingChatRoom){
+    if (existingChatRoom) {
       navigator.navigate('Chat', {
         id: existingChatRoom.id,
         name: matchUser?.name,
       });
-      console.log("hello");
+      console.log('hello');
       return;
     }
     const newChatRoomData = await API.graphql(
@@ -83,15 +85,11 @@ const MatchesScreen = () => {
       }),
     );
 
-
-
-
     //add clicked user to the chatroom
     //add auth user to the chatroom
     navigator.navigate('Chat', {id: newChatRoom.id});
     //navigate to chatroom
   };
-
 
   useEffect(() => {
     const getCurrentUser = async () => {
@@ -114,8 +112,12 @@ const MatchesScreen = () => {
       const response = await API.graphql(
         graphqlOperation(MyQuery, {id: me.id}),
       );
-      //console.log(response.data.getUser.chatrooms.items);
-      setChatRooms(response.data.getUser.chatrooms.items);
+
+      const rooms = response?.data?.getUser?.chatrooms?.items;
+      const sortedRooms = rooms.sort(
+        (r1,r2) => new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt),
+      );
+      setChatRooms(sortedRooms);
     };
 
     fetchChatRooms();
@@ -198,8 +200,8 @@ const styles = StyleSheet.create({
   name: {
     textAlign: 'center',
     marginTop: 10,
-    fontWeight: 'bold'
-  }
+    fontWeight: 'bold',
+  },
 });
 
 export default MatchesScreen;

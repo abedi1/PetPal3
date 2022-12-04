@@ -15,13 +15,13 @@ import messages from '../../assets/data/messages.json';
 import InputBox from '../components/InputBox';
 import React from 'react';
 import {API, graphqlOperation, Auth} from 'aws-amplify';
-import {getChatRoom} from '../graphql/queries';
+import {getChatRoom, listMessagesByChatRoom} from '../graphql/queries';
 import {Match, User} from '../models';
 import {DataStore} from 'aws-amplify';
 
-
 const ChatScreen = () => {
   const [chatRoom, setChatRoom] = useState(null);
+  const [messages, setMessages] = useState([]);
 
   const navigation = useNavigation();
   const route = useRoute();
@@ -46,11 +46,26 @@ const ChatScreen = () => {
   }, []);
   //console.log(me);
 
+  // fetch Chat Room
   useEffect(() => {
-    API.graphql(graphqlOperation(getChatRoom, {id: chatroomID})).then(result =>
-      setChatRoom(result.data?.getChatRoom),
+    API.graphql(graphqlOperation(getChatRoom, {id: chatroomID})).then(
+      result => {
+        setChatRoom(result.data?.getChatRoom);
+      },
     );
-  }, []);
+  }, [chatroomID]);
+
+  //fetch Messages
+  useEffect(() => {
+    API.graphql(
+      graphqlOperation(listMessagesByChatRoom, {
+        chatroomID,
+        sortDirection: "DESC",
+      })
+    ).then(result => {
+      setMessages(result.data?.listMessagesByChatRoom?.items);
+    });
+  }, [chatroomID]);
 
   useEffect(() => {
     navigation.setOptions({title: route.params.name});
@@ -64,17 +79,17 @@ const ChatScreen = () => {
       style={styles.bg}>
       <ImageBackground source={bg} style={styles.bg}>
         <FlatList
-          data={chatRoom?.Messages?.items}
+          data={messages}
           renderItem={({item}) => <Message message={item} me={me.id} />}
           style={{padding: 10}}
           inverted
         />
 
-        <InputBox chatroomID={chatroomID} />
+        <InputBox chatRoom={chatRoom} />
       </ImageBackground>
     </KeyboardAvoidingView>
   );
-};;
+};
 
 const styles = StyleSheet.create({
   bg: {
@@ -82,7 +97,7 @@ const styles = StyleSheet.create({
   },
 
   wrapper: {
-   // flex: 1,
+    // flex: 1,
   },
 });
 

@@ -49,7 +49,7 @@
         "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
         "UserPoolName": "PetPal"
       },
-      "lastPushTimeStamp": "2022-11-29T22:22:43.726Z",
+      "lastPushTimeStamp": "2022-11-29T20:49:41.390Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/auth/PetPal-cloudformation-template.json",
         "logicalId": "authPetPal"
@@ -80,7 +80,7 @@
         "GraphQLAPIEndpointOutput": "https://naq6rvonafcxzc5gnuitjpaxyq.appsync-api.us-east-1.amazonaws.com/graphql",
         "GraphQLAPIKeyOutput": "da2-3xlfownauzbj3fykswoiqbjfm4"
       },
-      "lastPushTimeStamp": "2022-11-29T22:22:43.733Z",
+      "lastPushTimeStamp": "2022-11-29T20:49:41.443Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/api/cloudformation-template.json",
         "logicalId": "apiPetPal"
@@ -97,7 +97,7 @@
         "BucketName": "petpal-storage-835c48e2202101-staging",
         "Region": "us-east-1"
       },
-      "lastPushTimeStamp": "2022-11-29T22:22:46.808Z",
+      "lastPushTimeStamp": "2022-11-29T20:49:41.393Z",
       "providerMetadata": {
         "s3TemplateURL": "https://s3.amazonaws.com/amplify-petpal-staging-202101-deployment/amplify-cfn-templates/storage/cloudformation-template.json",
         "logicalId": "storages3petpalstorage835c48e2"

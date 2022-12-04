@@ -17,6 +17,9 @@
       },
       "storage": {
         "s3petpalstorage835c48e2": {}
+      },
+      "api": {
+        "PetPal": {}
       }
     }
   }
