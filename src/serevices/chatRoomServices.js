@@ -7,7 +7,7 @@ export default getCommonChatRoomWithUser = async (meID, matchID) => {
   const response = await API.graphql(
     graphqlOperation(listChatRooms, {id: matchID}),
   );
-  console.log(response.data.getUser.chatrooms.items);
+  //console.log(response.data.getUser.chatrooms.items);
 
   const chatRooms = response.data?.getUser?.chatrooms?.items || [];
 

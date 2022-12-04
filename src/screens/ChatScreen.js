@@ -18,7 +18,7 @@ import {API, graphqlOperation, Auth} from 'aws-amplify';
 import {getChatRoom, listMessagesByChatRoom} from '../graphql/queries';
 import {Match, User} from '../models';
 import {DataStore} from 'aws-amplify';
-import {onCreateMessage} from "../graphql/subscriptions"
+import {onCreateMessage, onUpdateChatRoom} from '../graphql/subscriptions';
 
 const ChatScreen = () => {
   const [chatRoom, setChatRoom] = useState(null);
@@ -54,6 +54,22 @@ const ChatScreen = () => {
         setChatRoom(result.data?.getChatRoom);
       },
     );
+
+    const subscription = API.graphql(
+      graphqlOperation(onUpdateChatRoom, {filter: {id: {eq: chatroomID}}}),
+    ).subscribe({
+      next: ({value}) => {
+        console.log('Updated');
+        console.log(value);
+        setChatRoom((cr) => ({
+          ...(cr || {}),
+          ...value.data.onUpdateChatRoom
+        }));
+      },
+      error: err => console.warn(err),
+    });
+
+    return () => subscription.unsubscribe();
   }, [chatroomID]);
 
   //fetch Messages
@@ -61,14 +77,27 @@ const ChatScreen = () => {
     API.graphql(
       graphqlOperation(listMessagesByChatRoom, {
         chatroomID,
-        sortDirection: "DESC",
-      })
+        sortDirection: 'DESC',
+      }),
     ).then(result => {
       setMessages(result.data?.listMessagesByChatRoom?.items);
     });
 
     //subscribe to new Messages
-    
+    const subscription = API.graphql(
+      graphqlOperation(onCreateMessage, {
+        filter: {chatroomID: {eq: chatroomID}},
+      }),
+    ).subscribe({
+      next: ({value}) => {
+        console.log('New Message');
+        console.log(value);
+        setMessages(m => [value.data.onCreateMessage, ...m]);
+      },
+      error: err => console.warn(err),
+    });
+
+    return () => subscription.unsubscribe();
   }, [chatroomID]);
 
   useEffect(() => {

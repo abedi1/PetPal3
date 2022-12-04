@@ -28,7 +28,7 @@ const InputBox = ({chatRoom}) => {
   }, []);
   //console.log(me.id);
   const onSend = async () => {
-    console.warn('Send a new message: ', text);
+    // console.warn('Send a new message: ', text);
 
     const newMessage = {
       chatroomID:chatRoom.id,

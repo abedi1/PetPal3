@@ -46,6 +46,7 @@ const MatchesScreen = () => {
   const [matches, setMatches] = useState([]);
   const [me, setMe] = useState(null);
   const navigator = useNavigation();
+  const [loading, setLoading] = useState(false);
 
   pressed = matchUser => async () => {
     //check if the chatroom exists
@@ -106,20 +107,20 @@ const MatchesScreen = () => {
     getCurrentUser();
   }, []);
 
+  const fetchChatRooms = async () => {
+    setLoading(true);
+    const response = await API.graphql(graphqlOperation(MyQuery, {id: me.id}));
+
+    const rooms = response?.data?.getUser?.chatrooms?.items;
+    const sortedRooms = rooms.sort(
+      (r1, r2) =>
+        new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt),
+    );
+    setChatRooms(sortedRooms);
+    setLoading(false);
+  };
+
   useEffect(() => {
-    const fetchChatRooms = async () => {
-      const response = await API.graphql(
-        graphqlOperation(MyQuery, {id: me.id}),
-      );
-
-      const rooms = response?.data?.getUser?.chatrooms?.items;
-      const sortedRooms = rooms.sort(
-        (r1, r2) =>
-          new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt),
-      );
-      setChatRooms(sortedRooms);
-    };
-
     fetchChatRooms();
   }, [me]);
 
@@ -141,16 +142,15 @@ const MatchesScreen = () => {
             me.id,
             matchUser.id,
           );
-          if (existingChatRoom){
+          if (existingChatRoom) {
             temp = temp.filter(item => item !== match);
           }
-
-        }else if (match.matchUser2Id == me.id){
+        } else if (match.matchUser2Id == me.id) {
           const existingChatRoom = await getCommonChatRoomWithUser(
             me.id,
             matchUser.id,
           );
-          if (existingChatRoom){
+          if (existingChatRoom) {
             temp = temp.filter(item => item !== match);
           }
         }
@@ -163,9 +163,11 @@ const MatchesScreen = () => {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
-        {matches[0] && (<Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
-          New Matches
-        </Text>)}
+        {matches[0] && (
+          <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
+            New Matches
+          </Text>
+        )}
         <View style={styles.users}>
           {matches.map(match => {
             const matchUser =
@@ -185,7 +187,9 @@ const MatchesScreen = () => {
         <FlatList
           data={chatRooms}
           renderItem={({item}) => <ChatListItem chat={item.chatRoom} me={me} />}
-          keyExtractor={item => item.chatRoom.id}
+          style ={{backgroundColor: "white"}}
+          refreshing={loading}
+          onRefresh={fetchChatRooms}
         />
       </View>
     </SafeAreaView>

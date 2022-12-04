@@ -127,7 +127,7 @@ const HomeScreen = ({isUserLoading}) => {
     );
     if (theirMatches.length > 0) {
       // Did they already swipe right on us
-      console.warn('This is a new match');
+      isModalVisible;
       const theirMatch = theirMatches[0]; // the first match
       DataStore.save(
         Match.copyOf(theirMatch, updated => (updated.isMatch = true)),
