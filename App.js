@@ -15,7 +15,6 @@ import ChatScreen from './src/screens/ChatScreen';
 
 const App = () => {
 
-
   const [activeScreen, setActiveScreen] = useState('INIT');
   const [isUserLoading, setIsUserLoading] = useState(true)
 
@@ -55,9 +54,9 @@ const App = () => {
 
    
     return (
-      <View style={styles.container}>
+      <SafeAreaView style={styles.container}>
         {renderPage()}
-        </View>
+        </SafeAreaView>
        
     );
 }
@@ -65,11 +64,11 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      paddingHorizontal: 50,
-      paddingVertical:20,
+      //paddingHorizontal: 50,
+      //paddingVertical:20,
       justifyContent: 'center',
       alignItems: 'center',
-      backgroundColor: '#e97a3a',
+      backgroundColor: '#ededed',
     },
     header: {
       flex: 1,

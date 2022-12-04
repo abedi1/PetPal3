@@ -6,25 +6,31 @@ import AnimatedStack from '../components/AnimatedStack';
 
 const SignInHeader = () => {
     return(
-        <View style={styles.container}>
-        <Text>  </Text>
-        <Text>  </Text>
-        <Text>  </Text>
+        <SafeAreaView style={styles.container}>
+
         <Image source={require('../components/logo.png')} ></Image>
+
         <Text>  </Text>
         <Text>  </Text>
         <Text>  </Text>
-        </View>
+        <Text>  </Text>
+        <Text>  </Text>
+        <Text>  </Text>
+        <Text>  </Text>
+        <Text>  </Text>
+        <Text>  </Text>
+        </SafeAreaView>
     )
 }
 
 const styles = StyleSheet.create({
     container: {
-        paddingBottom:60,
+        paddingBottom:100,
+        paddingHorizontal: 200,
         justifyContent: 'center',
         alignItems: 'center',
-        width: 75,
-        height: 200,    
+        width: "50%",
+        height: "5%",   
     }
 });
 
