@@ -18,6 +18,7 @@ import {API, graphqlOperation, Auth} from 'aws-amplify';
 import {getChatRoom, listMessagesByChatRoom} from '../graphql/queries';
 import {Match, User} from '../models';
 import {DataStore} from 'aws-amplify';
+import {onCreateMessage} from "../graphql/subscriptions"
 
 const ChatScreen = () => {
   const [chatRoom, setChatRoom] = useState(null);
@@ -65,6 +66,9 @@ const ChatScreen = () => {
     ).then(result => {
       setMessages(result.data?.listMessagesByChatRoom?.items);
     });
+
+    //subscribe to new Messages
+    
   }, [chatroomID]);
 
   useEffect(() => {
