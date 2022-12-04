@@ -143,10 +143,14 @@ const AnimatedStack = props => {
           </View>
           <View style={styles.modalBody}>
             <Text>
-              If you like the profile swipe right or press the heart button. If
-              you don't like the profile swipe left or press the x button. If
-              the other person also swipes right on you then it's a MATCH. You
-              will be able to message them and discuss being pet pals!
+              If you like the current profile, swipe RIGHT or press the HEART button. 
+            </Text>
+            <Text>
+              If you don't like the profile swipe LEFT or press the X button.
+            </Text>
+            <Text>
+              If you and another person swipe right on eachother, then it's a MATCH. You
+              will then be able to message them and discuss being pet pals!
             </Text>
           </View>
           <View style = {styles.modalFooter}>
@@ -194,7 +198,7 @@ const AnimatedStack = props => {
               <FontAwesome
                 name="question"
                 size={bottomIconSize}
-                color="#3AB4CC"
+                color="black"
               />
             </TouchableOpacity>
           </View>

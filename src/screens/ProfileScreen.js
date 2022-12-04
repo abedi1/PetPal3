@@ -128,7 +128,7 @@ const ProfileScreen = () => {
       ({didCancel, errorCode, errorMessage, assets}) => {
         if (didCancel || errorCode) {
           console.warn('canceled or error');
-          if (!errorCode) {
+          if (errorCode) {
             console.log(errorMessage);
           }
           return;
@@ -155,10 +155,12 @@ const ProfileScreen = () => {
   return (
     <SafeAreaView style={styles.root}>
       <ScrollView style={styles.container}>
+        <View style={styles.imageChange}>
         {renderImage()}
         <Pressable onPress={pickImage}>
           <Text> Change Image</Text>
         </Pressable>
+        </View>
         <TextInput
           style={styles.input}
           placeholder="Name ..."
@@ -169,17 +171,19 @@ const ProfileScreen = () => {
           style={styles.input}
           multiline
           numberOfLines={3}
+          maxLength={200} 
           placeholder="bio..."
           value={bio}
           onChangeText={setBio}
         />
-        <Text>Do you want to be a pet pal?</Text>
+        <Text style={styles.what}>What do you want to see today?</Text>
         <Picker
           selectedValue={hasPet}
-          onValueChange={itemValue => setHasPet(itemValue)}>
+          onValueChange={itemValue => setHasPet(itemValue)}
+          style={styles.picker}>
           <Picker.Item label="Select..." value={null} />
-          <Picker.Item label="Yes" value={true} />
-          <Picker.Item label="No" value={false} />
+          <Picker.Item label="People to care for my pet" value={true} />
+          <Picker.Item label="Pets to care for" value={false} />
         </Picker>
 
         <Pressable onPress={save} style={styles.button}>
@@ -203,6 +207,18 @@ const styles = StyleSheet.create({
   container: {
     padding: 10,
     backgroundColor: '#ededed',
+    borderBottomRightRadius: 10,
+    borderBottomLeftRadius: 10,
+  },
+  what: {
+    paddingTop: 10,
+    textAlign: 'center',
+    //fontFamily: "Gill Sans",
+    fontSize: 17,
+    fontWeight: 'bold',
+  },
+  picker: {
+    height: "50%",
   },
   buttonText: {
     textAlign: 'center',
@@ -212,7 +228,7 @@ const styles = StyleSheet.create({
 },
   button: {
     backgroundColor: '#e97a3a',
-    height: 25,
+    height: "5%",
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
@@ -223,11 +239,11 @@ const styles = StyleSheet.create({
   },
   button2: {
     backgroundColor: 'black',
-    height: 25,
+    height: "5%",
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
-    marginBottom: 150,
+    //marginBottom: 150,
   },
   input: {
     margin: 10,
@@ -239,6 +255,10 @@ const styles = StyleSheet.create({
     height: 100,
     borderRadius: 50,
   },
+  imageChange: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  }
 });
 
 export default ProfileScreen;
