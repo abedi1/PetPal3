@@ -3,6 +3,7 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {View} from 'react-native';
 import ChatScreen from '../screens/ChatScreen';
 import MatchesScreen from '../screens/MatchesScreen';
+import DummyScreen from '../screens/DummyScreen'
 import {createStackNavigator} from '@react-navigation/stack';
 
 const Stack = createStackNavigator();

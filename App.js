@@ -3,14 +3,10 @@ import {SafeAreaView, Text, View, Image, Button, TouchableOpacity, Alert, StyleS
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import InitScreen from './src/screens/InitScreen';
 import HomeScreen from './src/screens/HomeScreen';
-import MatchesScreen from './src/screens/MatchesScreen';
 import ProfileScreen from './src/screens/ProfileScreen';
 import SignTest from './src/screens/SignTest';
 import SignInHeader from './src/screens/SignInHeader';
 import Navigator from './src/navigation/index';
-import { NavigationContainer } from '@react-navigation/native';
-import { createStackNavigator } from '@react-navigation/stack';
-import ChatScreen from './src/screens/ChatScreen';
   
 
 const App = () => {
@@ -45,7 +41,7 @@ const App = () => {
     }
   
     if (activeScreen === 'CHAT'){
-      return <Navigator />;
+      return <Navigator/>;
     }
     if (activeScreen === 'PROFILE'){
       return <ProfileScreen/>

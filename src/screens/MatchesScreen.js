@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {API, graphqlOperation} from 'aws-amplify';
 import {createChatRoom, createChatRoomUser} from '../graphql/mutations';
-import { MyQuery } from './matchQueries'
+import {MyQuery} from './matchQueries';
 import getCommonChatRoomWithUser from '../serevices/chatRoomServices';
 
 import {
@@ -114,7 +114,8 @@ const MatchesScreen = () => {
 
       const rooms = response?.data?.getUser?.chatrooms?.items;
       const sortedRooms = rooms.sort(
-        (r1,r2) => new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt),
+        (r1, r2) =>
+          new Date(r2.chatRoom.updatedAt) - new Date(r1.chatRoom.updatedAt),
       );
       setChatRooms(sortedRooms);
     };
@@ -133,6 +134,28 @@ const MatchesScreen = () => {
           .or(m => m.matchUser1Id('eq', me.id).matchUser2Id('eq', me.id)),
       );
       setMatches(result);
+      temp = JSON.parse(JSON.stringify(matches));
+      for (match in matches) {
+        if (match.matchUser1Id == me.id) {
+          const existingChatRoom = await getCommonChatRoomWithUser(
+            me.id,
+            matchUser.id,
+          );
+          if (existingChatRoom){
+            temp = temp.filter(item => item !== match);
+          }
+
+        }else if (match.matchUser2Id == me.id){
+          const existingChatRoom = await getCommonChatRoomWithUser(
+            me.id,
+            matchUser.id,
+          );
+          if (existingChatRoom){
+            temp = temp.filter(item => item !== match);
+          }
+        }
+      }
+      setMatches(temp);
     };
     fetchMatches();
   }, [me]);
@@ -140,9 +163,9 @@ const MatchesScreen = () => {
   return (
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
-        <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
+        {matches[0] && (<Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
           New Matches
-        </Text>
+        </Text>)}
         <View style={styles.users}>
           {matches.map(match => {
             const matchUser =
@@ -162,6 +185,7 @@ const MatchesScreen = () => {
         <FlatList
           data={chatRooms}
           renderItem={({item}) => <ChatListItem chat={item.chatRoom} me={me} />}
+          keyExtractor={item => item.chatRoom.id}
         />
       </View>
     </SafeAreaView>
