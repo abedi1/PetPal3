@@ -19,5 +19,6 @@
     "stylus",
     "xml",
     "svg"
-  ]
+  ],
+  "java.compile.nullAnalysis.mode": "automatic"
 }
