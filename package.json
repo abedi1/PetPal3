@@ -15,7 +15,7 @@
     "@react-native-community/netinfo": "^9.3.6",
     "@react-native-picker/picker": "^2.4.8",
     "@react-navigation/bottom-tabs": "^6.4.1",
-    "@react-navigation/native": "^6.0.14",
+    "@react-navigation/native": "^6.0.16",
     "@react-navigation/native-stack": "^6.9.2",
     "@react-navigation/stack": "^6.3.5",
     "amazon-cognito-identity-js": "^5.2.12",

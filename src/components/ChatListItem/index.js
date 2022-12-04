@@ -5,13 +5,12 @@ import {useNavigation} from '@react-navigation/native';
 import {useEffect, useState} from 'react';
 import {Auth, API, graphqlOperation} from 'aws-amplify';
 
-
 dayjs.extend(relativeTime);
 
 const ChatListItem = ({chat, me}) => {
   const navigation = useNavigation();
   //const user = chat.Users.items[0].user;
-   const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);
   //const [chatRoom, setChatRoom] = useState(chat);
 
   useEffect(() => {
@@ -42,9 +41,11 @@ const ChatListItem = ({chat, me}) => {
             {user?.name}
           </Text>
 
-          <Text style={styles.subTitle}>
-            {dayjs(chat?.LastMessage?.createdAt).fromNow()}
-          </Text>
+          {chat.LastMessage && (
+            <Text style={styles.subTitle}>
+              {dayjs(chat.LastMessage?.createdAt).fromNow(true)}
+            </Text>
+          )}
         </View>
 
         <Text style={styles.subTitle} numberOfLines={2}>

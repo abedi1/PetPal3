@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {API, graphqlOperation} from 'aws-amplify';
 import {createChatRoom, createChatRoomUser} from '../graphql/mutations';
-import {MyQuery} from '../graphql/queries';
+import { MyQuery } from './matchQueries'
 import getCommonChatRoomWithUser from '../serevices/chatRoomServices';
 
 import {
@@ -26,7 +26,6 @@ import Message from '../components/Message';
 import messages from '../../assets/data/messages.json';
 import chats from '../../assets/data/chats.json';
 import {create} from 'react-test-renderer';
-import Navigator from '../navigation/index';
 import {useNavigation, useRoute} from '@react-navigation/native';
 
 const chat = {
