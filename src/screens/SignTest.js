@@ -123,7 +123,6 @@ const SignTest = () => {
 const styles = StyleSheet.create({
   root: {
     flex: 1,
-    // flexDirection: 'row',
     width: '100%',
   },
   pageContainer: {
@@ -134,7 +133,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     width: '100%',
     padding: 10,
-    //paddingTop:15,
     backgroundColor: '#e97a3a',
   },
 });
