@@ -143,14 +143,20 @@ const AnimatedStack = props => {
           </View>
           <View style={styles.modalBody}>
             <Text>
-              If you like the current profile, swipe RIGHT or press the HEART button. 
+              + If you like the current profile, swipe RIGHT or press the HEART button. 
             </Text>
             <Text>
-              If you don't like the profile swipe LEFT or press the X button.
+            {'\n'}+ If you don't like the profile swipe LEFT or press the X button.
             </Text>
             <Text>
-              If you and another person swipe right on eachother, then it's a MATCH. You
+            {'\n'}+ If you and another account swipe right on eachother, then it's a MATCH. You
               will then be able to message them and discuss being pet pals!
+            </Text>
+            <Text>
+              {'\n'}+ Press the PLUS button near the current profile name to see their full bio
+            </Text>
+            <Text>
+              {'\n'}+ Press the REPORT USER button at the top of the screen to send a report for the PetPal Team to review
             </Text>
           </View>
           <View style = {styles.modalFooter}>
@@ -274,6 +280,8 @@ const styles = StyleSheet.create({
   modalHeadingText: {
     paddingTop: 10,
     textAlign: 'center',
+    fontFamily: 'Gill Sans',
+    fontWeight: 'bold',
     fontSize: 24,
   },
   modalText: {

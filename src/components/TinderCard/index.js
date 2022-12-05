@@ -1,9 +1,10 @@
 import React, {useEffect, useState} from 'react';
-import {Text, ImageBackground, View, StyleSheet, Button, TouchableOpacity} from 'react-native';
+import {Text, ImageBackground, View, StyleSheet, Button, TouchableOpacity, Alert} from 'react-native';
 import {Storage} from 'aws-amplify';
 import { set } from 'react-native-reanimated';
 import Modal from 'react-native-modal';
 import FontAwesome from 'react-native-vector-icons/FontAwesome';
+import { Greetings } from 'aws-amplify-react-native/dist/Auth';
 
 
 const bottomIconSize = 30;
@@ -22,9 +23,18 @@ const Card = props => {
     }
   }, [image])
 
+  const report = () => {
+
+    Alert.alert(
+      'This user has been reported\n\nThe PetPal team will review their account'
+      )
+    {}
+  }
+
 
   return (
     <View style={styles.card}>
+      
       <Modal
         isVisible={isModalVisible}
         animationInTiming={500}
@@ -49,7 +59,9 @@ const Card = props => {
           uri: imageUrl,
         }}
         style={styles.image}>
-        
+        <TouchableOpacity onPress={report} style={styles.report}>
+          <Text style={{fontWeight: 'bold', fontSize: 15, color: '#b5b5b5', margin: 5}}> Report User ! </Text>
+        </TouchableOpacity>
       </ImageBackground>
       <View style={styles.cardInner}>
           <Text style={styles.name}>{name}</Text>
@@ -90,11 +102,19 @@ const styles = StyleSheet.create({
 
     justifyContent: 'flex-end',
   },
+  report: {
+    flex: 1,
+    alignSelf: 'flex-start',
+    marginTop: "2%",
+    marginLeft: "2%",
+    marginBottom: "114%",
+    backgroundColor: 'white',
+    borderRadius: 70,
+    opacity: 0.7
+  },
   cardInner: {
-     //marginBottom: 350,
    padding: 10,
    backgroundColor: '#b5b5b5',
-   //opacity: 0.7,
   },
   button: {
     width: '10%',
@@ -102,7 +122,6 @@ const styles = StyleSheet.create({
     justifyContent: 'space-around',
     alignItems: 'center',
     backgroundColor: 'white',
-    //paddingHorizontal: 10,
     borderRadius: 100,
     opacity: 0.8,
     alignSelf: 'flex-end',
@@ -158,9 +177,6 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     paddingHorizontal: 15,
     minHeight: 100,
-    //borderBottomColor: '#e97a3a',
-    //borderBottomWidth: 0.2,
-    //paddingBottom: 10,
   },
   modalFooter: {
     justifyContent: 'center',
