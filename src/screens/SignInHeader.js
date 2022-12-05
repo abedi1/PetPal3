@@ -9,7 +9,7 @@ const SignInHeader = () => {
         <SafeAreaView style={styles.container}>
 
         <Image source={require('../components/logo.png')} ></Image>
-
+{/* 
         <Text>  </Text>
         <Text>  </Text>
         <Text>  </Text>
@@ -18,7 +18,7 @@ const SignInHeader = () => {
         <Text>  </Text>
         <Text>  </Text>
         <Text>  </Text>
-        <Text>  </Text>
+        <Text>  </Text> */}
         </SafeAreaView>
     )
 }

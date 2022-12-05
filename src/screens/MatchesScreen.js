@@ -164,7 +164,7 @@ const MatchesScreen = () => {
     <SafeAreaView style={styles.root}>
       <View style={styles.container}>
         {matches[0] && (
-          <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E'}}>
+          <Text style={{fontWeight: 'bold', fontSize: 24, color: '#F63A6E', textAlign: 'center',}}>
             New Matches
           </Text>
         )}
@@ -200,7 +200,7 @@ const styles = StyleSheet.create({
   root: {
     width: '100%',
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 10,
   },
   container: {
     padding: 10,

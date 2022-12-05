@@ -64,12 +64,11 @@ const ProfileScreen = () => {
       await Storage.put(key, blob);
 
       return key;
-
     } catch (e) {
       console.log(e);
     }
     return '';
-  }
+  };
 
   const save = async () => {
     if (!isValid()) {
@@ -101,7 +100,7 @@ const ProfileScreen = () => {
     } else {
       const authUser = await Auth.currentAuthenticatedUser(); //user ID linked from authentication list
       if (!newImageLocalUri) {
-        console.warn("Please select an image");
+        console.warn('Please select an image');
         return;
       }
 
@@ -110,7 +109,7 @@ const ProfileScreen = () => {
         name: name,
         bio: bio,
         hasPet: hasPet,
-        image:newImage,
+        image: newImage,
       });
       try {
         await DataStore.save(newUser);
@@ -156,10 +155,10 @@ const ProfileScreen = () => {
     <SafeAreaView style={styles.root}>
       <ScrollView style={styles.container}>
         <View style={styles.imageChange}>
-        {renderImage()}
-        <Pressable onPress={pickImage}>
-          <Text> Change Image</Text>
-        </Pressable>
+          {renderImage()}
+          <Pressable onPress={pickImage}>
+            <Text> Change Image</Text>
+          </Pressable>
         </View>
         <TextInput
           style={styles.input}
@@ -171,7 +170,7 @@ const ProfileScreen = () => {
           style={styles.input}
           multiline
           numberOfLines={3}
-          maxLength={200} 
+          maxLength={200}
           placeholder="bio..."
           value={bio}
           onChangeText={setBio}
@@ -185,15 +184,16 @@ const ProfileScreen = () => {
           <Picker.Item label="People to care for my pet" value={true} />
           <Picker.Item label="Pets to care for" value={false} />
         </Picker>
-
-        <Pressable onPress={save} style={styles.button}>
-          <Text style={styles.buttonText}>SAVE</Text>
-        </Pressable>
-
-        <Pressable onPress={signOut} style={styles.button2}>
-          <Text style={styles.buttonText}>SIGN OUT</Text>
-        </Pressable>
       </ScrollView>
+      <View style={styles.footer}>
+          <Pressable onPress={save} style={styles.button}>
+            <Text style={styles.buttonText}>SAVE</Text>
+          </Pressable>
+
+          <Pressable onPress={signOut} style={styles.button2}>
+            <Text style={styles.buttonText}>SIGN OUT</Text>
+          </Pressable>
+        </View>
     </SafeAreaView>
   );
 };
@@ -202,13 +202,12 @@ const styles = StyleSheet.create({
   root: {
     width: '100%',
     flex: 1,
-    padding: 10,
+    paddingHorizontal: 20,
   },
   container: {
-    padding: 10,
     backgroundColor: '#ededed',
-    borderBottomRightRadius: 10,
-    borderBottomLeftRadius: 10,
+    // borderBottomRightRadius: 10,
+    // borderBottomLeftRadius: 10,
   },
   what: {
     paddingTop: 10,
@@ -218,17 +217,23 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   picker: {
-    height: "50%",
+    // height: "50%",
   },
   buttonText: {
     textAlign: 'center',
-    fontFamily: "Gill Sans",
+    fontFamily: 'Gill Sans',
     color: '#fff4e4',
-    
-},
+  },
+  footer: {
+    flex: 1,
+    //justifyContent: 'flex-end',
+    marginTop: 'auto',
+    backgroundColor: '#ededed',
+
+  },
   button: {
     backgroundColor: '#e97a3a',
-    height: "5%",
+   // height: '5%',
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
@@ -239,7 +244,7 @@ const styles = StyleSheet.create({
   },
   button2: {
     backgroundColor: 'black',
-    height: "5%",
+// height: '5%',
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
@@ -258,7 +263,7 @@ const styles = StyleSheet.create({
   imageChange: {
     justifyContent: 'center',
     alignItems: 'center',
-  }
+  },
 });
 
 export default ProfileScreen;

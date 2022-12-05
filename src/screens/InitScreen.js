@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet} from 'react-native';
+import {Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet, SafeAreaView} from 'react-native';
 import SignInHeader from './SignInHeader';
 import SignTest from './SignTest';
 
@@ -36,9 +36,9 @@ const InitScreen = () => {
     }
 
     return (
-        <View style={styles.container2}>
+        <SafeAreaView style={styles.container2}>
         {renderPage()}
-        </View>
+        </SafeAreaView>
     )
     
     
@@ -55,8 +55,8 @@ const styles = StyleSheet.create({
     },
     container2: {
         flex: 1,
-        paddingHorizontal: 50,
-        paddingVertical:20,
+         paddingHorizontal: 10,
+        // paddingVertical:20,
         justifyContent: 'center',
         alignItems: 'center',
         backgroundColor: '#e97a3a',
