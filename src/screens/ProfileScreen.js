@@ -157,7 +157,7 @@ const ProfileScreen = () => {
         <View style={styles.imageChange}>
           {renderImage()}
           <Pressable onPress={pickImage}>
-            <Text> Change Image</Text>
+          <Text style={{textDecorationLine: 'underline', color: 'orange'}}> Change Image</Text>
           </Pressable>
         </View>
         <TextInput
@@ -169,12 +169,12 @@ const ProfileScreen = () => {
         <TextInput
           style={styles.input}
           multiline
-          numberOfLines={3}
-          maxLength={200}
+          maxLength={500}
           placeholder="bio..."
           value={bio}
           onChangeText={setBio}
         />
+        <Text style={{fontSize: 10, paddingLeft: 10,}}>500 characters max</Text>
         <Text style={styles.what}>What do you want to see today?</Text>
         <Picker
           selectedValue={hasPet}
@@ -206,34 +206,28 @@ const styles = StyleSheet.create({
   },
   container: {
     backgroundColor: '#ededed',
-    // borderBottomRightRadius: 10,
-    // borderBottomLeftRadius: 10,
   },
-  what: {
+  question: { // What do you want to see today?
     paddingTop: 10,
     textAlign: 'center',
-    //fontFamily: "Gill Sans",
     fontSize: 17,
     fontWeight: 'bold',
-  },
-  picker: {
-    // height: "50%",
   },
   buttonText: {
     textAlign: 'center',
     fontFamily: 'Gill Sans',
     color: '#fff4e4',
   },
-  footer: {
+  footer: { // buttons
     flex: 1,
-    //justifyContent: 'flex-end',
     marginTop: 'auto',
     backgroundColor: '#ededed',
-
+    paddingHorizontal: 10,
+    
   },
-  button: {
+  button: { // SAVE BUTTON
     backgroundColor: '#e97a3a',
-   // height: '5%',
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderWidth: 2,
@@ -242,13 +236,12 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     marginBottom: 12,
   },
-  button2: {
+  button2: { // SIGN OUT BUTTON
     backgroundColor: 'black',
-// height: '5%',
+    height: 30,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 20,
-    //marginBottom: 150,
   },
   input: {
     margin: 10,
