@@ -140,7 +140,7 @@ const MatchesScreen = () => {
         if (match.matchUser1Id == me.id) {
           const existingChatRoom = await getCommonChatRoomWithUser(
             me.id,
-            matchUser.id,
+            match.matchUser2Id,
           );
           if (existingChatRoom) {
             temp = temp.filter(item => item !== match);
@@ -148,7 +148,7 @@ const MatchesScreen = () => {
         } else if (match.matchUser2Id == me.id) {
           const existingChatRoom = await getCommonChatRoomWithUser(
             me.id,
-            matchUser.id,
+            match.matchUser1Id,
           );
           if (existingChatRoom) {
             temp = temp.filter(item => item !== match);

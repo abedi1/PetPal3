@@ -49,6 +49,7 @@ const styles = StyleSheet.create({
       justifyContent: 'center',
       alignItems: 'center',
       backgroundColor: '#e97a3a',
+      paddingHorizontal:10
     },
     header: {
       flex: 1,
