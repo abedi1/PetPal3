@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {SafeAreaView, Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet, ActivityIndicator} from 'react-native';
+import {SafeAreaView, Text, View, Image, Button, TouchableOpacity, Alert, StyleSheet, ActivityIndicator, LogBox} from 'react-native';
 import {GestureHandlerRootView} from 'react-native-gesture-handler';
 import InitScreen from './src/screens/InitScreen';
 import HomeScreen from './src/screens/HomeScreen';
@@ -10,6 +10,7 @@ import Navigator from './src/navigation/index';
   
 
 const App = () => {
+  LogBox.ignoreAllLogs();//Ignore all log notifications
 
   const [activeScreen, setActiveScreen] = useState('INIT');
   const [isUserLoading, setIsUserLoading] = useState(true)
@@ -60,7 +61,7 @@ const App = () => {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      //paddingHorizontal: 50,
+      paddingHorizontal: 10,
       //paddingVertical:20,
       justifyContent: 'center',
       alignItems: 'center',
@@ -71,8 +72,8 @@ const styles = StyleSheet.create({
       flexDirection: 'row'
     },
     signin: {
-      flex: 3,
-      flexDirection: 'row'
+      flex: 1,
+      flexDirection: 'row',
     },
     main: {
         fontFamily: "Gill Sans",
