@@ -17,7 +17,18 @@ Welcome to PetPal - a Tinder-style app designed to connect pet-owners in need of
   The actual app is organized into different "Screens" (which you can find in the src/screens folder). The flow of the app goes from App.js
   directly into the InitScreen, then into the SignTest screen which is wrapped in the AWS authenticator.
 
-(iii) what steps someone would need to take to set it up (ala README)
+(iii) set-up steps
+  In order to set this project up on your own machine, follow these steps:
+  1. git clone this project
+  2. go to this site and follow the instructions under the heading "React Native CLI Quickstart"
+    https://reactnative.dev/docs/environment-setup
+    (it would probably work with the Expo instructions as well, we just used the CLI instructions)
+  3. if you are planning on running the ios version, make sure to cd into the ios folder and run the command "pod install"
+  4. cd to the root folder and connect it to your own AWS database
+  5. then open a new terminal, cd into the PetPal3 folder, and run the command "yarn start"
+    at this point, the terminal should be running a process to open a simulator
+  6. in your original terminal (also in the root folder) run the command "yarn ios start" if you plan to run the ios version
+  7. then, it should build and open the app in your simulator, and you can get to editing + running 
   
   
   Once the app is set up, users follow these steps:
