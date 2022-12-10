@@ -12,7 +12,10 @@ Welcome to PetPal - a Tinder-style app designed to connect pet-owners in need of
   We know that it can be hard to find someone to help out with your pet, and we know that there are a lot of people out there who love
   playing with animals, so we created PetPal as a fun way to connect these markets. 
   
-(ii) how the technology is architected and organized, including main technologies, 
+(ii) how is the technology is architected and organized? 
+  We created PetPal using React Native (with Javascript and some CSS). Our backend is set up with AWS amplify. 
+  The actual app is organized into different "Screens" (which you can find in the src/screens folder). The flow of the app goes from App.js
+  directly into the InitScreen, then into the SignTest screen which is wrapped in the AWS authenticator.
 
 (iii) what steps someone would need to take to set it up (ala README)
   
